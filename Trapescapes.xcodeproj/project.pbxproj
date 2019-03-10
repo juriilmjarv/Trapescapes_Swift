@@ -15,6 +15,11 @@
 		53BDF5382232D294005BC159 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF5362232D294005BC159 /* Main.storyboard */; };
 		53BDF53A2232D296005BC159 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF5392232D296005BC159 /* Assets.xcassets */; };
 		53BDF53D2232D296005BC159 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF53B2232D296005BC159 /* LaunchScreen.storyboard */; };
+		53BDF5452232D2D2005BC159 /* ground.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF5442232D2D2005BC159 /* ground.atlas */; };
+		53BDF5472232D597005BC159 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF5462232D597005BC159 /* Ground.swift */; };
+		53BDF5492232D5F5005BC159 /* GameSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF5482232D5F5005BC159 /* GameSprite.swift */; };
+		53BDF54B2232F006005BC159 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF54A2232F006005BC159 /* Player.swift */; };
+		53BDF54D2232F6F8005BC159 /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF54C2232F6F8005BC159 /* player.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +33,11 @@
 		53BDF5392232D296005BC159 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		53BDF53C2232D296005BC159 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		53BDF53E2232D296005BC159 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53BDF5442232D2D2005BC159 /* ground.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ground.atlas; sourceTree = "<group>"; };
+		53BDF5462232D597005BC159 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		53BDF5482232D5F5005BC159 /* GameSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSprite.swift; sourceTree = "<group>"; };
+		53BDF54A2232F006005BC159 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		53BDF54C2232F6F8005BC159 /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +70,8 @@
 		53BDF52B2232D294005BC159 /* Trapescapes */ = {
 			isa = PBXGroup;
 			children = (
+				53BDF54C2232F6F8005BC159 /* player.atlas */,
+				53BDF5442232D2D2005BC159 /* ground.atlas */,
 				53BDF52C2232D294005BC159 /* AppDelegate.swift */,
 				53BDF52E2232D294005BC159 /* GameScene.sks */,
 				53BDF5302232D294005BC159 /* Actions.sks */,
@@ -69,6 +81,9 @@
 				53BDF5392232D296005BC159 /* Assets.xcassets */,
 				53BDF53B2232D296005BC159 /* LaunchScreen.storyboard */,
 				53BDF53E2232D296005BC159 /* Info.plist */,
+				53BDF5462232D597005BC159 /* Ground.swift */,
+				53BDF5482232D5F5005BC159 /* GameSprite.swift */,
+				53BDF54A2232F006005BC159 /* Player.swift */,
 			);
 			path = Trapescapes;
 			sourceTree = "<group>";
@@ -131,9 +146,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53BDF5452232D2D2005BC159 /* ground.atlas in Resources */,
 				53BDF5382232D294005BC159 /* Main.storyboard in Resources */,
 				53BDF52F2232D294005BC159 /* GameScene.sks in Resources */,
 				53BDF53A2232D296005BC159 /* Assets.xcassets in Resources */,
+				53BDF54D2232F6F8005BC159 /* player.atlas in Resources */,
 				53BDF53D2232D296005BC159 /* LaunchScreen.storyboard in Resources */,
 				53BDF5312232D294005BC159 /* Actions.sks in Resources */,
 			);
@@ -148,6 +165,9 @@
 			files = (
 				53BDF5332232D294005BC159 /* GameScene.swift in Sources */,
 				53BDF5352232D294005BC159 /* GameViewController.swift in Sources */,
+				53BDF5472232D597005BC159 /* Ground.swift in Sources */,
+				53BDF5492232D5F5005BC159 /* GameSprite.swift in Sources */,
+				53BDF54B2232F006005BC159 /* Player.swift in Sources */,
 				53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
