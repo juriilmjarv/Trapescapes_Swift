@@ -28,6 +28,9 @@ class Player: SKSpriteNode, GameSprite  {
         moveAnimation = SKAction.repeatForever(flyAction)
     }
     
+    
+ 
+    
     func onTap() {
         
     }

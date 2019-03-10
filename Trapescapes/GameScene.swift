@@ -65,7 +65,10 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        for t in touches {
+            self.touchDown(atPoint: t.location(in: self))
+            fireBullet()
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -83,11 +86,11 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        playerProgress = player.position.y + initialPlayerPosition.y
+
     }
     
     override func didSimulatePhysics() {
-        
-        
         
         player.position.x += xAcceleration * 50
         player.position.y += yAcceleration * 50
@@ -113,5 +116,25 @@ class GameScene: SKScene {
         ground.checkForReposition(playerProgress: playerProgress)
         
     }
+    
+    func fireBullet() {
+        let bullet = SKSpriteNode(imageNamed: "bullet.png")
+        bullet.position = CGPoint(x: player.position.x , y: -self.size.height + 275)
+        bullet.zPosition = 2
+        bullet.physicsBody = SKPhysicsBody(circleOfRadius: bullet.size.width / 2)
+        bullet.physicsBody?.isDynamic = true
+        bullet.physicsBody?.collisionBitMask = 0
+        bullet.physicsBody?.usesPreciseCollisionDetection = true
+        
+        self.addChild(bullet)
+        
+        let animationDuration:TimeInterval = 0.9
+        var actionArray = [SKAction]()
+        actionArray.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
+        actionArray.append(SKAction.removeFromParent())
+        bullet.run(SKAction.sequence(actionArray))
+    }
+    
+    
 
 }
