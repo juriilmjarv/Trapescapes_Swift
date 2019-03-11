@@ -15,6 +15,8 @@ class GameScene: SKScene {
     let world = SKNode()
     let ground = Ground()
     let player = Player()
+    let mill = EnemyOne()
+    let platform = EnemyPlatform()
     
     let initialPlayerPosition = CGPoint(x: 0, y: -200)
     var playerProgress = CGFloat()
@@ -31,10 +33,20 @@ class GameScene: SKScene {
         player.spawn(parentNode: world, position: initialPlayerPosition)
         player.zPosition = 2
         
+        //spawn the mill
+        mill.spawn(parentNode: world, position: CGPoint(x: self.size.width / 2 , y: self.size.height))
+        mill.zPosition = 2
+        
+        //spawn the platform
+        platform.spawn(parentNode: world, position: CGPoint(x: self.size.width / 2 , y: self.size.height * 2))
+        platform.zPosition = 2
+        
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
         let groundSize = CGSize(width: 0 , height: self.size.height * 3)
         ground.spawn(parentNode: world, position: groundPosition, size: groundSize)
+        
+        
         
         //Accelerometer
         motionManager.accelerometerUpdateInterval = 0.01
@@ -43,7 +55,8 @@ class GameScene: SKScene {
             if let accelerometerData = data {
                 let acceleration = accelerometerData.acceleration
                 self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
-                self.yAcceleration = CGFloat(acceleration.y) * 0.75 + self.yAcceleration * 0.25
+                //make y acceleration very sensitive
+                self.yAcceleration = CGFloat(acceleration.y) * 2 + self.yAcceleration * 0.25
             }
         }
 
@@ -118,6 +131,7 @@ class GameScene: SKScene {
     }
     
     func fireBullet() {
+        self.run(SKAction.playSoundFileNamed("shooting.mp3", waitForCompletion: false))
         let bullet = SKSpriteNode(imageNamed: "bullet.png")
         bullet.position = CGPoint(x: player.position.x , y: -self.size.height + 275)
         bullet.zPosition = 2
