@@ -15,8 +15,9 @@ class GameScene: SKScene {
     let world = SKNode()
     let ground = Ground()
     let player = Player()
-    let mill = EnemyOne()
-    let platform = EnemyPlatform()
+    
+    let encounterManager = EncounterManager()
+    var nextEncounterSpawnPosition = CGFloat(500)
     
     let initialPlayerPosition = CGPoint(x: 0, y: -200)
     var playerProgress = CGFloat()
@@ -32,21 +33,11 @@ class GameScene: SKScene {
         //Spawn the player
         player.spawn(parentNode: world, position: initialPlayerPosition)
         player.zPosition = 2
-        
-        //spawn the mill
-        mill.spawn(parentNode: world, position: CGPoint(x: self.size.width / 2 , y: self.size.height))
-        mill.zPosition = 2
-        
-        //spawn the platform
-        platform.spawn(parentNode: world, position: CGPoint(x: self.size.width / 2 , y: self.size.height * 2))
-        platform.zPosition = 2
-        
+
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
         let groundSize = CGSize(width: 0 , height: self.size.height * 3)
         ground.spawn(parentNode: world, position: groundPosition, size: groundSize)
-        
-        
         
         //Accelerometer
         motionManager.accelerometerUpdateInterval = 0.01
@@ -55,11 +46,13 @@ class GameScene: SKScene {
             if let accelerometerData = data {
                 let acceleration = accelerometerData.acceleration
                 self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
-                //make y acceleration very sensitive
+                //make y acceleration very sensitive and work in opposite way which makes it easier to use.
                 self.yAcceleration = CGFloat(acceleration.y) * 2 + self.yAcceleration * 0.25
             }
         }
-
+        
+        //add encounters
+        encounterManager.addEncountersToWorld(world: self.world)
         
     }
     
@@ -125,8 +118,13 @@ class GameScene: SKScene {
 
         
         playerProgress = player.position.y - initialPlayerPosition.y
-        
         ground.checkForReposition(playerProgress: playerProgress)
+        
+        //Check if we need to place a new encounter
+        if player.position.y > nextEncounterSpawnPosition {
+            encounterManager.placeNextEncounter(currentYPos: nextEncounterSpawnPosition)
+            nextEncounterSpawnPosition += 2000
+        }
         
     }
     
