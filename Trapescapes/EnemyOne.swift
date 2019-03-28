@@ -23,6 +23,13 @@ class EnemyOne: SKSpriteNode, GameSprite {
         let rotate = SKAction.rotate(byAngle: .pi / 3, duration: TimeInterval(speed))
         spinAnimation = SKAction.repeatForever(rotate)
         mill.run(spinAnimation)
+        mill.physicsBody = SKPhysicsBody(texture: mill.texture!, size: mill.size)
+        mill.physicsBody?.affectedByGravity = false
+        mill.physicsBody?.isDynamic = false
+        
+        
+        mill.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue
+        mill.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedBee.rawValue
     }
     
     func onTap() {

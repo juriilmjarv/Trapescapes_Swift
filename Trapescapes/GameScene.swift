@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 import CoreMotion
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let world = SKNode()
     let ground = Ground()
@@ -24,7 +24,7 @@ class GameScene: SKScene {
     
     let motionManager = CMMotionManager()
     var xAcceleration:CGFloat = 0
-    var yAcceleration:CGFloat = 0
+    //var yAcceleration:CGFloat = 0
     
     override func didMove(to view: SKView) {
         
@@ -32,12 +32,14 @@ class GameScene: SKScene {
         
         //Spawn the player
         player.spawn(parentNode: world, position: initialPlayerPosition)
-        player.zPosition = 2
 
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
         let groundSize = CGSize(width: 0 , height: self.size.height * 3)
         ground.spawn(parentNode: world, position: groundPosition, size: groundSize)
+        ground.zPosition = -1
+        
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         
         //Accelerometer
         motionManager.accelerometerUpdateInterval = 0.01
@@ -47,17 +49,20 @@ class GameScene: SKScene {
                 let acceleration = accelerometerData.acceleration
                 self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
                 //make y acceleration very sensitive and work in opposite way which makes it easier to use.
-                self.yAcceleration = CGFloat(acceleration.y) * 2 + self.yAcceleration * 0.25
+                //self.yAcceleration = CGFloat(acceleration.y) * 2 + self.yAcceleration * 0.25
             }
         }
         
         //add encounters
         encounterManager.addEncountersToWorld(world: self.world)
         
+        self.physicsWorld.contactDelegate = self
+        
     }
     
     
     func touchDown(atPoint pos : CGPoint) {
+        player.startFlapping()
 
     }
     
@@ -72,34 +77,57 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for t in touches {
-            self.touchDown(atPoint: t.location(in: self))
-            fireBullet()
+            let location = t.location(in: self)
+            
+            if(location.x > self.frame.size.width/2){
+                print("Right")
+                fireBullet()
+            }
+                
+            if(location.x < self.frame.size.width/2){
+                print("Left")
+                player.startFlapping()
+            }
         }
+        //player.startFlapping()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        for t in touches {
+            self.touchMoved(toPoint: t.location(in: self))
+            
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        for t in touches {
+            self.touchUp(atPoint: t.location(in: self))
+            //player.stopFlapping()
+            
+        }
+        player.stopFlapping()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        for t in touches {
+            self.touchUp(atPoint: t.location(in: self))
+            //player.stopFlapping()
+        }
+        player.stopFlapping()
     }
     
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         playerProgress = player.position.y + initialPlayerPosition.y
+        player.update();
 
     }
     
     override func didSimulatePhysics() {
         
         player.position.x += xAcceleration * 50
-        player.position.y += yAcceleration * 50
+        //player.position.y += yAcceleration * 50
         if player.position.x < -20 {
             player.position = CGPoint(x: self.size.width + 20 , y: player.position.y)
         } else if player.position.x > self.size.width + 20 {
@@ -147,6 +175,28 @@ class GameScene: SKScene {
         bullet.run(SKAction.sequence(actionArray))
     }
     
-    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let otherBody:SKPhysicsBody
+        let beeMask = PhysicsCategory.bee.rawValue | PhysicsCategory.damagedBee.rawValue
+        if(contact.bodyA.categoryBitMask & beeMask > 0){
+            otherBody = contact.bodyB
+        } else {
+            otherBody = contact.bodyA
+        }
+        
+        switch otherBody.categoryBitMask {
+        case PhysicsCategory.enemy.rawValue:
+            print("Collision with enemy!!!!")
+        default:
+            print("contact with something other than enemy")
+        }
+    }
 
+}
+
+enum PhysicsCategory:UInt32 {
+    case bee = 1
+    case damagedBee = 2
+    case enemy = 4
+    case coin = 8
 }

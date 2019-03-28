@@ -21,6 +21,12 @@ class EnemyPlatform: SKSpriteNode, GameSprite {
         platform.position = position
         createMoving()
         platform.run(movingAction)
+        platform.physicsBody = SKPhysicsBody(texture: platform.texture!, size: platform.size)
+        platform.physicsBody?.affectedByGravity = false
+        platform.physicsBody?.isDynamic = false
+        
+        platform.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue
+        platform.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedBee.rawValue
         
     }
     

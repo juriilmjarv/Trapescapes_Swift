@@ -33,15 +33,12 @@ class EncounterManager {
                         case "Mill":
                             let mill = EnemyOne()
                             mill.spawn(parentNode: encounter, position: node.position)
-                            mill.zPosition = 2
                         case "Platform":
                             let platform = EnemyPlatform()
                             platform.spawn(parentNode: encounter, position: node.position)
-                            platform.zPosition = 2
                         case "Ghost":
                             let ghost = EnemyGhost()
                             ghost.spawn(parentNode: encounter, position: node.position)
-                            ghost.zPosition = 2
                         default:
                             print("Wrong name used in encounters")
                         }
@@ -135,7 +132,7 @@ class EncounterManager {
         
         // Reset the new encounter and position it ahead of the player
         let encounter = encounters[currentEncounterIndex!]
-        encounter.position = CGPoint(x: 375, y: currentYPos + 1000)
+        encounter.position = CGPoint(x: 375, y: currentYPos + 1800)
         resetSpritePositions(node: encounter)
     }
     
