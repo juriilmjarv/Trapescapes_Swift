@@ -27,7 +27,6 @@ class EncounterManager {
             
             if let encounterScene = SKScene(fileNamed: encounterFileName) {
                 for placeholder in encounterScene.children {
-                    
                     let node = placeholder
                         switch node.name! {
                         case "Mill":
@@ -39,24 +38,28 @@ class EncounterManager {
                         case "Ghost":
                             let ghost = EnemyGhost()
                             ghost.spawn(parentNode: encounter, position: node.position)
+                        case "Coin":
+                            let coin = Coin()
+                            coin.spawn(parentNode: encounter, position: node.position)
                         default:
                             print("Wrong name used in encounters")
                         }
                 }
             }
-            
             encounters.append(encounter)
             saveSpritePositions(node: encounter)
         }
     }
     
     func addEncountersToWorld(world:SKNode) {
+        var encounterYPos = 1350
         for index in 0 ... encounters.count - 1 {
             // Spawn the encounters behind the action, with
             // increasing height so they do not collide:
             encounters[index].position = CGPoint(x: 375, y:
-                index * 1000)
+                encounterYPos)
             world.addChild(encounters[index])
+            encounterYPos *= 2
         }
     }
     

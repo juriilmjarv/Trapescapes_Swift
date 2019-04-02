@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53649F8A224F9981006A04C9 /* hud.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 53649F89224F9981006A04C9 /* hud.atlas */; };
+		53649F8C224F9A31006A04C9 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F8B224F9A31006A04C9 /* HUD.swift */; };
+		53649F92224FD1CF006A04C9 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F91224FD1CF006A04C9 /* MenuScene.swift */; };
+		53649F94225367A9006A04C9 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F93225367A9006A04C9 /* Coin.swift */; };
 		53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF52C2232D294005BC159 /* AppDelegate.swift */; };
 		53BDF52F2232D294005BC159 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF52E2232D294005BC159 /* GameScene.sks */; };
 		53BDF5312232D294005BC159 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF5302232D294005BC159 /* Actions.sks */; };
@@ -32,11 +36,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53649F89224F9981006A04C9 /* hud.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hud.atlas; sourceTree = "<group>"; };
+		53649F8B224F9A31006A04C9 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		53649F91224FD1CF006A04C9 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		53649F93225367A9006A04C9 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		53BDF5292232D294005BC159 /* Trapescapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trapescapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53BDF52C2232D294005BC159 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		53BDF52E2232D294005BC159 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		53BDF5302232D294005BC159 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
-		53BDF5322232D294005BC159 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		53BDF5322232D294005BC159 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; usesTabs = 0; };
 		53BDF5342232D294005BC159 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		53BDF5372232D294005BC159 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		53BDF5392232D296005BC159 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,6 +96,7 @@
 		53BDF52B2232D294005BC159 /* Trapescapes */ = {
 			isa = PBXGroup;
 			children = (
+				53649F89224F9981006A04C9 /* hud.atlas */,
 				53BDF55B223807CB005BC159 /* Encounters */,
 				53BDF55222367A04005BC159 /* enemies.atlas */,
 				53BDF5442232D2D2005BC159 /* ground.atlas */,
@@ -109,6 +118,9 @@
 				53BDF5572236B987005BC159 /* EnemyPlatform.swift */,
 				53BDF5592237FB18005BC159 /* EnemyGhost.swift */,
 				53BDF560223809C9005BC159 /* EncounterManager.swift */,
+				53649F8B224F9A31006A04C9 /* HUD.swift */,
+				53649F91224FD1CF006A04C9 /* MenuScene.swift */,
+				53649F93225367A9006A04C9 /* Coin.swift */,
 			);
 			path = Trapescapes;
 			sourceTree = "<group>";
@@ -187,6 +199,7 @@
 				53BDF563223815EA005BC159 /* EncounterGhosts.sks in Resources */,
 				53BDF52F2232D294005BC159 /* GameScene.sks in Resources */,
 				53BDF55F2238084E005BC159 /* EncounterMills.sks in Resources */,
+				53649F8A224F9981006A04C9 /* hud.atlas in Resources */,
 				53BDF53A2232D296005BC159 /* Assets.xcassets in Resources */,
 				53BDF54D2232F6F8005BC159 /* player.atlas in Resources */,
 				53BDF55622369EB8005BC159 /* shooting.mp3 in Resources */,
@@ -209,8 +222,11 @@
 				53BDF55122366C5B005BC159 /* EnemyOne.swift in Sources */,
 				53BDF5352232D294005BC159 /* GameViewController.swift in Sources */,
 				53BDF5472232D597005BC159 /* Ground.swift in Sources */,
+				53649F8C224F9A31006A04C9 /* HUD.swift in Sources */,
 				53BDF5492232D5F5005BC159 /* GameSprite.swift in Sources */,
+				53649F94225367A9006A04C9 /* Coin.swift in Sources */,
 				53BDF561223809C9005BC159 /* EncounterManager.swift in Sources */,
+				53649F92224FD1CF006A04C9 /* MenuScene.swift in Sources */,
 				53BDF54B2232F006005BC159 /* Player.swift in Sources */,
 				53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */,
 			);

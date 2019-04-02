@@ -15,16 +15,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let world = SKNode()
     let ground = Ground()
     let player = Player()
+    let hud = HUD()
     
     let encounterManager = EncounterManager()
-    var nextEncounterSpawnPosition = CGFloat(500)
+    var nextEncounterSpawnPosition = CGFloat(1000)
     
     let initialPlayerPosition = CGPoint(x: 0, y: -200)
     var playerProgress = CGFloat()
     
     let motionManager = CMMotionManager()
     var xAcceleration:CGFloat = 0
-    //var yAcceleration:CGFloat = 0
+    
+    var coinsCollected = 0
     
     override func didMove(to view: SKView) {
         
@@ -32,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Spawn the player
         player.spawn(parentNode: world, position: initialPlayerPosition)
-
+        
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
         let groundSize = CGSize(width: 0 , height: self.size.height * 3)
@@ -58,36 +60,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.physicsWorld.contactDelegate = self
         
+        hud.createHudNodes(screenSize: self.size)
+        self.addChild(hud)
+        hud.zPosition = 50
+        
     }
     
-    
+
     func touchDown(atPoint pos : CGPoint) {
         player.startFlapping()
-
+        
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-
+        
     }
     
     func touchUp(atPoint pos : CGPoint) {
-
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for t in touches {
             let location = t.location(in: self)
+            let nodeTouched = atPoint(location)
             
             if(location.x > self.frame.size.width/2){
                 print("Right")
                 fireBullet()
             }
-                
+            
             if(location.x < self.frame.size.width/2){
                 print("Left")
                 player.startFlapping()
             }
+            
+            if nodeTouched.name == "restartGame"{
+                self.removeAllChildren()
+                self.removeAllActions()
+                self.scene?.removeFromParent()
+                let gameSceneTemp = GameScene(size: self.size)
+                gameSceneTemp.anchorPoint = CGPoint(x: 0, y: 1)
+                self.view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
+                
+            }
+            
+            
         }
         //player.startFlapping()
     }
@@ -121,7 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Called before each frame is rendered
         playerProgress = player.position.y + initialPlayerPosition.y
         player.update();
-
+        
     }
     
     override func didSimulatePhysics() {
@@ -143,7 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Figure out player position and scroll the world based on that.
         let worldYPos = -(player.position.y * world.yScale + (self.size.height / 1.2))
         world.position = CGPoint(x: 0, y: worldYPos)
-
+        
         
         playerProgress = player.position.y - initialPlayerPosition.y
         ground.checkForReposition(playerProgress: playerProgress)
@@ -186,12 +205,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         switch otherBody.categoryBitMask {
         case PhysicsCategory.enemy.rawValue:
+            player.takeDamage()
+            hud.updateHealth(newHealth: player.health)
             print("Collision with enemy!!!!")
+        case PhysicsCategory.coin.rawValue:
+            print("Coin collison")
+            if let coin = otherBody.node as? Coin {
+                coin.collectCoin()
+                self.coinsCollected += coin.val
+                hud.coinCounter(newCoinCount: self.coinsCollected)
+                print(self.coinsCollected)
+            }
         default:
             print("contact with something other than enemy")
         }
     }
-
+    
+    func gameOver() {
+        hud.showButtons()
+        
+    }
+    
 }
 
 enum PhysicsCategory:UInt32 {

@@ -14,16 +14,21 @@ class Player: SKSpriteNode, GameSprite  {
     var flyAnimation = SKAction()
     var soarAnimation = SKAction()
     var flapping = false
-    let maxFlappingForce:CGFloat = 90000
+    var maxFlappingForce:CGFloat = 90000
     
-    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 64, height: 64)) {
+    var health:Int = 3
+    var damaged = false
+    var damageAnimation = SKAction()
+    var dieAnimation = SKAction()
+    
+    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 75, height: 75)) {
         parentNode.addChild(self)
         createAnimations()
         self.size = size
         self.position = position
         self.run(soarAnimation, withKey: "soarAnimation")
         
-        let bodyTexture = textureAtlas.textureNamed("bee.png")
+        let bodyTexture = textureAtlas.textureNamed("left-1.png")
         self.physicsBody = SKPhysicsBody(
             texture: bodyTexture,
             size: size)
@@ -40,21 +45,41 @@ class Player: SKSpriteNode, GameSprite  {
     }
     
     func createAnimations() {
-        let flyFrames:[SKTexture] = [textureAtlas.textureNamed("bee.png"), textureAtlas.textureNamed("bee_fly.png")]
-        let flyAction = SKAction.animate(with: flyFrames, timePerFrame: 0.14)
+        let flyFrames:[SKTexture] = [textureAtlas.textureNamed("left-0.png"), textureAtlas.textureNamed("left-1.png"), textureAtlas.textureNamed("left-2.png"), textureAtlas.textureNamed("left-3.png"), textureAtlas.textureNamed("left-4.png"), textureAtlas.textureNamed("left-5.png")]
+        let flyAction = SKAction.animate(with: flyFrames, timePerFrame: 0.02)
         flyAnimation = SKAction.repeatForever(flyAction)
         
-        let soarFrames:[SKTexture] = [textureAtlas.textureNamed("bee.png")]
+        let soarFrames:[SKTexture] = [textureAtlas.textureNamed("left-1.png")]
         let soarAction = SKAction.animate(with: soarFrames, timePerFrame: 1)
         soarAnimation = SKAction.group([SKAction.repeatForever(soarAction)])
+        
+        let startDie = SKAction.run{
+            self.texture = self.textureAtlas.textureNamed("left-1.png")
+        }
+        let endDie = SKAction.run {
+            self.physicsBody?.affectedByGravity = true
+        }
+        self.dieAnimation = SKAction.sequence([
+            startDie,
+            // Scale the penguin bigger:
+            SKAction.scale(to: 1.3, duration: 0.1),
+            // Use the waitForDuration action to provide a short pause:
+            SKAction.wait(forDuration: 0.1),
+            // Rotate the penguin on to his back:
+            SKAction.rotate(toAngle: 3, duration: 0.5),
+            SKAction.wait(forDuration: 0.5),
+            endDie
+            ])
     }
     
     func startFlapping(){
+        if self.health <= 0 {return}
         self.removeAction(forKey: "soarAnimation")
         self.run(flyAnimation, withKey: "flapAnimation")
         self.flapping = true
     }
     func stopFlapping(){
+        if self.health <= 0 {return}
         self.removeAction(forKey: "flapAnimation")
         self.run(soarAnimation, withKey: "soarAnimation")
         self.flapping = false
@@ -71,6 +96,37 @@ class Player: SKSpriteNode, GameSprite  {
         }
     }
     
+    func die() {
+        // Make sure the player is fully visible:
+        self.alpha = 1
+        // Remove all animations:
+        self.removeAllActions()
+        // Run the die animation:
+        self.run(self.dieAnimation)
+        // Prevent any further upward movement:
+        self.flapping = false
+        // Stop forward movement:
+        self.maxFlappingForce = 0
+        if let gameScene = self.parent?.parent as? GameScene {
+            gameScene.gameOver()
+        }
+    }
+    
+    func takeDamage() {
+        // If invulnerable or damaged, return:
+        if self.damaged { return }
+        //self.damaged = true
+        // Remove one from our health pool
+        self.health -= 1
+        if self.health == 0 {
+            // If we are out of health, run the die function:
+            die()
+        }
+        else {
+            // Run the take damage animation:
+            self.run(self.damageAnimation)
+        }
+    }
     func onTap() {
         
     }
