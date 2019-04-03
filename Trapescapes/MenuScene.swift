@@ -14,19 +14,19 @@ class MenuScene: SKScene {
     let startButton = SKSpriteNode()
     
     override func didMove(to view: SKView) {
-        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.anchorPoint = CGPoint(x: 0, y: 1)
         self.backgroundColor = UIColor(red: 0.4, green: 0.6, blue: 0.95, alpha: 1.0)
         
         let logoText = SKLabelNode(fontNamed: "AvenirNext-Heavy")
         logoText.text = "Trapescapes"
-        logoText.position = CGPoint(x: 0, y: 100)
+        logoText.position = CGPoint(x: self.size.width / 2, y: (-self.size.height / 2) + 200)
         logoText.fontSize = 50
         self.addChild(logoText)
         
         startButton.texture = textures.textureNamed("button.png")
-        startButton.size = CGSize(width: 295, height: 76)
+        startButton.size = CGSize(width: 350, height: 100)
         startButton.name = "StartBtn"
-        startButton.position = CGPoint(x: 0, y: -20)
+        startButton.position = CGPoint(x: self.size.width / 2, y: -self.size.height / 2)
         self.addChild(startButton)
         
         let startText = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")

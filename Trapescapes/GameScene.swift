@@ -17,6 +17,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let player = Player()
     let hud = HUD()
     
+    var currentMaxY:Int = 0
+    var didFail = false
+    
     let encounterManager = EncounterManager()
     var nextEncounterSpawnPosition = CGFloat(1000)
     
@@ -40,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let groundSize = CGSize(width: 0 , height: self.size.height * 3)
         ground.spawn(parentNode: world, position: groundPosition, size: groundSize)
         ground.zPosition = -1
+        
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         
@@ -87,13 +91,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let nodeTouched = atPoint(location)
             
             if(location.x > self.frame.size.width/2){
-                print("Right")
-                fireBullet()
+                player.startFlapping()
             }
             
             if(location.x < self.frame.size.width/2){
-                print("Left")
-                player.startFlapping()
+                fireBullet()
             }
             
             if nodeTouched.name == "restartGame"{
@@ -103,12 +105,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let gameSceneTemp = GameScene(size: self.size)
                 gameSceneTemp.anchorPoint = CGPoint(x: 0, y: 1)
                 self.view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
-                
+            } else if nodeTouched.name == "returnToMenu" {
+                let gameSceneTemp = MenuScene()
+                gameSceneTemp.scene?.anchorPoint = CGPoint(x: 0, y: 1)
+                gameSceneTemp.scene?.size = CGSize(width: 750, height: 1334)
+                view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
             }
-            
-            
         }
-        //player.startFlapping()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -138,10 +141,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        playerProgress = player.position.y + initialPlayerPosition.y
         player.update();
         
+        //if Int(player.position.y) > currentMaxY {
+        //    currentMaxY = Int(player.position.y)
+       // }
     }
+    
     
     override func didSimulatePhysics() {
         
@@ -158,7 +164,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.position = CGPoint(x: player.position.x , y: self.size.height-self.size.height - 640)
         }
         
+        
+        if Int(player.position.y) > currentMaxY {
+            currentMaxY = Int(player.position.y)
+        }
         //TODO
+        //If player falls then end game
+        if Int(player.position.y) < currentMaxY - 1000 && !didFail {
+            didFail = true
+            print("GAME OVER!!!")
+            player.health = 0
+            hud.updateHealth(newHealth: player.health)
+            player.takeDamage()
+            gameOver()
+        }
+        
         // Figure out player position and scroll the world based on that.
         let worldYPos = -(player.position.y * world.yScale + (self.size.height / 1.2))
         world.position = CGPoint(x: 0, y: worldYPos)
@@ -223,7 +243,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func gameOver() {
         hud.showButtons()
-        
     }
     
 }

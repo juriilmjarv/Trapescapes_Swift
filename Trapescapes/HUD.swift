@@ -15,6 +15,7 @@ class HUD: SKNode {
     let coinCountText = SKLabelNode(text: "000000")
     let restartButton = SKSpriteNode()
     let menuButton = SKSpriteNode()
+    var backgroundLayer = SKShapeNode()
 
     
     func createHudNodes(screenSize: CGSize){
@@ -43,6 +44,11 @@ class HUD: SKNode {
         coinCountText.fontSize = 40
         coinCountText.position = CGPoint(x: 75, y: -screenSize.height + 1300)
         self.addChild(coinCountText)
+        
+        backgroundLayer = SKShapeNode(rectOf: CGSize(width: (screenSize.width * 2) + 1, height: (-screenSize.height * 2) - 1))
+        backgroundLayer.fillColor = SKColor.black
+        backgroundLayer.alpha = 0.6
+        //self.addChild(backgroundLayer)
     }
     
     func updateHealth(newHealth: Int){
@@ -69,6 +75,7 @@ class HUD: SKNode {
         restartButton.alpha = 0
         menuButton.alpha = 0
         
+        self.addChild(backgroundLayer)
         self.addChild(restartButton)
         self.addChild(menuButton)
         let fade = SKAction.fadeAlpha(to: 1, duration: 0.4)

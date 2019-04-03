@@ -11,6 +11,7 @@
 		53649F8C224F9A31006A04C9 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F8B224F9A31006A04C9 /* HUD.swift */; };
 		53649F92224FD1CF006A04C9 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F91224FD1CF006A04C9 /* MenuScene.swift */; };
 		53649F94225367A9006A04C9 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F93225367A9006A04C9 /* Coin.swift */; };
+		53649F982254D39D006A04C9 /* Playerpath.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53649F972254D39D006A04C9 /* Playerpath.sks */; };
 		53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF52C2232D294005BC159 /* AppDelegate.swift */; };
 		53BDF52F2232D294005BC159 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF52E2232D294005BC159 /* GameScene.sks */; };
 		53BDF5312232D294005BC159 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF5302232D294005BC159 /* Actions.sks */; };
@@ -40,6 +41,7 @@
 		53649F8B224F9A31006A04C9 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		53649F91224FD1CF006A04C9 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		53649F93225367A9006A04C9 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
+		53649F972254D39D006A04C9 /* Playerpath.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Playerpath.sks; sourceTree = "<group>"; };
 		53BDF5292232D294005BC159 /* Trapescapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trapescapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53BDF52C2232D294005BC159 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		53BDF52E2232D294005BC159 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				53649F8B224F9A31006A04C9 /* HUD.swift */,
 				53649F91224FD1CF006A04C9 /* MenuScene.swift */,
 				53649F93225367A9006A04C9 /* Coin.swift */,
+				53649F972254D39D006A04C9 /* Playerpath.sks */,
 			);
 			path = Trapescapes;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				53BDF53D2232D296005BC159 /* LaunchScreen.storyboard in Resources */,
 				53BDF55322367A04005BC159 /* enemies.atlas in Resources */,
 				53BDF5312232D294005BC159 /* Actions.sks in Resources */,
+				53649F982254D39D006A04C9 /* Playerpath.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

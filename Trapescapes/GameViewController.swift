@@ -17,13 +17,11 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
+            let gameSceneTemp = MenuScene()
+            gameSceneTemp.scene?.anchorPoint = CGPoint(x: 0, y: 1)
+            gameSceneTemp.scene?.size = CGSize(width: 750, height: 1334)
+            view.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
+
             
             view.ignoresSiblingOrder = true
             

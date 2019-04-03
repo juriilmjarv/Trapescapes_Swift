@@ -32,11 +32,8 @@ class Player: SKSpriteNode, GameSprite  {
         self.physicsBody = SKPhysicsBody(
             texture: bodyTexture,
             size: size)
-        // Pierre will lose momentum quickly with a high linearDamping:
         self.physicsBody?.linearDamping = 0.1
-        // Adult penguins weigh around 30kg:
         self.physicsBody?.mass = 10
-        // Prevent Pierre from rotating:
         self.physicsBody?.allowsRotation = false
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.bee.rawValue
@@ -54,10 +51,14 @@ class Player: SKSpriteNode, GameSprite  {
         soarAnimation = SKAction.group([SKAction.repeatForever(soarAction)])
         
         let startDie = SKAction.run{
-            self.texture = self.textureAtlas.textureNamed("left-1.png")
+            self.texture = self.textureAtlas.textureNamed("dead.png")
+            self.physicsBody?.affectedByGravity = false
+            self.physicsBody?.isDynamic = false
+            self.isPaused = true
+
         }
         let endDie = SKAction.run {
-            self.physicsBody?.affectedByGravity = true
+            self.physicsBody?.affectedByGravity = false
         }
         self.dieAnimation = SKAction.sequence([
             startDie,
@@ -112,6 +113,19 @@ class Player: SKSpriteNode, GameSprite  {
         }
     }
     
+    func freeFallDie() {
+        // Make sure the player is fully visible:
+        self.alpha = 1
+        // Remove all animations:
+        self.removeAllActions()
+        // Run the die animation:
+        self.run(self.dieAnimation)
+        // Prevent any further upward movement:
+        self.flapping = false
+        // Stop forward movement:
+        self.maxFlappingForce = 0
+    }
+    
     func takeDamage() {
         // If invulnerable or damaged, return:
         if self.damaged { return }
@@ -121,8 +135,9 @@ class Player: SKSpriteNode, GameSprite  {
         if self.health == 0 {
             // If we are out of health, run the die function:
             die()
-        }
-        else {
+        } else if self.health == -1 {
+            freeFallDie()
+        } else {
             // Run the take damage animation:
             self.run(self.damageAnimation)
         }
