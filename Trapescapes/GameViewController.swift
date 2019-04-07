@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
+            // Load the SKScene from 'MenuScene.swift'
             let gameSceneTemp = MenuScene()
             gameSceneTemp.scene?.anchorPoint = CGPoint(x: 0, y: 1)
             gameSceneTemp.scene?.size = CGSize(width: 750, height: 1334)

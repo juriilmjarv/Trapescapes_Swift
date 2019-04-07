@@ -142,9 +142,5 @@ class Player: SKSpriteNode, GameSprite  {
             self.run(self.damageAnimation)
         }
     }
-    func onTap() {
-        
-    }
-    
-    
+
 }

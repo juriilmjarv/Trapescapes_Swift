@@ -14,5 +14,4 @@ protocol GameSprite {
         get set
     }
     func spawn(parentNode: SKNode, position: CGPoint, size: CGSize)
-    func onTap()
 }

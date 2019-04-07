@@ -31,10 +31,5 @@ class EnemyOne: SKSpriteNode, GameSprite {
         mill.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue
         mill.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedBee.rawValue
     }
-    
-    func onTap() {
-        
-    }
-    
 
 }

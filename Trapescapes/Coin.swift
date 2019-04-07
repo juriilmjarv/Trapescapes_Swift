@@ -39,10 +39,6 @@ class Coin:SKSpriteNode, GameSprite {
         let collectSequence = SKAction.sequence([collectAnimation,resetCoin])
         self.run(collectSequence)
     }
-    
-    func onTap() {
-        
-    }
-    
+
     
 }

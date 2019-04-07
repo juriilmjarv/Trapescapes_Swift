@@ -17,6 +17,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let player = Player()
     let hud = HUD()
     
+    //let countdownLabel = SKLabelNode()
+    //var count = 5
+    
     var currentMaxY:Int = 0
     var didFail = false
     
@@ -33,10 +36,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
+        self.view?.isMultipleTouchEnabled = true
+        
+        
         self.addChild(world)
         
         //Spawn the player
         player.spawn(parentNode: world, position: initialPlayerPosition)
+        //player.physicsBody?.affectedByGravity = false
+        //player.physicsBody?.isDynamic = false
         
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
@@ -44,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.spawn(parentNode: world, position: groundPosition, size: groundSize)
         ground.zPosition = -1
         
-        
+        //set gravity on y axis
         self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         
         //Accelerometer
@@ -67,6 +75,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hud.createHudNodes(screenSize: self.size)
         self.addChild(hud)
         hud.zPosition = 50
+        
+        //countdown(count: 5)
         
     }
     
@@ -117,15 +127,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             self.touchMoved(toPoint: t.location(in: self))
-            
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             self.touchUp(atPoint: t.location(in: self))
-            //player.stopFlapping()
-            
         }
         player.stopFlapping()
     }
@@ -133,7 +140,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             self.touchUp(atPoint: t.location(in: self))
-            //player.stopFlapping()
         }
         player.stopFlapping()
     }
@@ -142,17 +148,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         player.update();
-        
-        //if Int(player.position.y) > currentMaxY {
-        //    currentMaxY = Int(player.position.y)
-       // }
     }
     
     
     override func didSimulatePhysics() {
         
+        //if player exceeds left/right edge then place it on left/right to prevent disapearing
         player.position.x += xAcceleration * 50
-        //player.position.y += yAcceleration * 50
         if player.position.x < -20 {
             player.position = CGPoint(x: self.size.width + 20 , y: player.position.y)
         } else if player.position.x > self.size.width + 20 {
@@ -164,12 +166,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.position = CGPoint(x: player.position.x , y: self.size.height-self.size.height - 640)
         }
         
-        
+        //Keep track of current max Y position
         if Int(player.position.y) > currentMaxY {
             currentMaxY = Int(player.position.y)
         }
-        //TODO
-        //If player falls then end game
+        
+        //If player falls 1000px then end game and set didFail to true to prevent goint into endless loop
         if Int(player.position.y) < currentMaxY - 1000 && !didFail {
             didFail = true
             print("GAME OVER!!!")
@@ -244,6 +246,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver() {
         hud.showButtons()
     }
+    
+    /*
+    func countdown(count: Int) {
+        //countdownLabel.horizontalAlignmentMode = .center
+        //countdownLabel.verticalAlignmentMode = .baseline
+        countdownLabel.position = CGPoint(x: self.size.width / 2, y: -self.size.height / 2)
+        countdownLabel.fontColor = SKColor.white
+        countdownLabel.fontSize = 80
+        countdownLabel.zPosition = 100
+        countdownLabel.text = "Start in \(count)..."
+        
+        self.addChild(countdownLabel)
+        
+        let counterDecrement = SKAction.sequence([SKAction.wait(forDuration: 1.0),
+                                                  SKAction.run(countdownAction)])
+        
+        run(SKAction.sequence([SKAction.repeat(counterDecrement, count: 5),
+                               SKAction.run(endCountdown)]))
+        
+    }
+    
+    func countdownAction() {
+        count = count - 1
+        countdownLabel.text = "Start in \(count)..."
+    }
+    
+    func endCountdown() {
+        countdownLabel.removeFromParent()
+        player.physicsBody?.affectedByGravity = true
+        player.physicsBody?.isDynamic = true
+    }
+ */
     
 }
 

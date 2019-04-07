@@ -52,7 +52,7 @@ class EncounterManager {
     }
     
     func addEncountersToWorld(world:SKNode) {
-        var encounterYPos = 1350
+        var encounterYPos = -2000
         for index in 0 ... encounters.count - 1 {
             // Spawn the encounters behind the action, with
             // increasing height so they do not collide:

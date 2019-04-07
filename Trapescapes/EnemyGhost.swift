@@ -44,8 +44,5 @@ class EnemyGhost: SKSpriteNode, GameSprite {
                                               fadeInGroup])
         fadeAnimation = SKAction.repeatForever(fadeSequence)
     }
-    func onTap() {
-        
-    }
-    
+
 }
