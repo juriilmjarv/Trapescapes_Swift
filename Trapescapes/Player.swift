@@ -35,8 +35,9 @@ class Player: SKSpriteNode, GameSprite  {
         self.physicsBody?.linearDamping = 0.1
         self.physicsBody?.mass = 10
         self.physicsBody?.allowsRotation = false
+        self.physicsBody?.restitution = 0.5
         
-        self.physicsBody?.categoryBitMask = PhysicsCategory.bee.rawValue
+        self.physicsBody?.categoryBitMask = PhysicsCategory.playerOwl.rawValue
         self.physicsBody?.contactTestBitMask = PhysicsCategory.enemy.rawValue | PhysicsCategory.coin.rawValue
         
     }
@@ -88,7 +89,6 @@ class Player: SKSpriteNode, GameSprite  {
     
     
     func update(){
-        //self.physicsBody?.velocity.dy = 200
         if self.flapping {
             self.physicsBody?.applyForce(CGVector(dx: 0, dy: maxFlappingForce))
         }
@@ -142,5 +142,4 @@ class Player: SKSpriteNode, GameSprite  {
             self.run(self.damageAnimation)
         }
     }
-
 }

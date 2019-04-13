@@ -13,7 +13,7 @@ class EnemyGhost: SKSpriteNode, GameSprite {
     var textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "enemies.atlas")
     var fadeAnimation = SKAction()
     
-    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 30, height: 44)) {
+    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 50, height: 64)) {
         parentNode.addChild(self)
         createAnimations()
         self.size = size
@@ -24,7 +24,7 @@ class EnemyGhost: SKSpriteNode, GameSprite {
         self.run(fadeAnimation)
         self.alpha = 0.8
         self.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue
-        self.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedBee.rawValue
+        self.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedOwl.rawValue
     }
     
     func createAnimations() {

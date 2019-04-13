@@ -21,6 +21,9 @@ class EncounterManager {
     
     var encounters:[SKNode] = []
     
+    //instantiate EnemyOne prototype
+    let base = EnemyOne()
+    
     init() {
         for encounterFileName in encounterNames {
             let encounter = SKNode()
@@ -30,8 +33,12 @@ class EncounterManager {
                     let node = placeholder
                         switch node.name! {
                         case "Mill":
-                            let mill = EnemyOne()
-                            mill.spawn(parentNode: encounter, position: node.position)
+                            let millClockWise = base.clone()
+                            millClockWise.rotation = -.pi
+                            millClockWise.spawn(parentNode: encounter, position: node.position)
+                        case "MillAntiClock":
+                            let millAntiClockWise = base.clone()
+                            millAntiClockWise.spawn(parentNode: encounter, position: node.position)
                         case "Platform":
                             let platform = EnemyPlatform()
                             platform.spawn(parentNode: encounter, position: node.position)
@@ -41,6 +48,9 @@ class EncounterManager {
                         case "Coin":
                             let coin = Coin()
                             coin.spawn(parentNode: encounter, position: node.position)
+                        case "EnemyEagle":
+                            let eagle = EnemyEagle()
+                            eagle.spawn(parentNode: encounter, position: node.position)
                         default:
                             print("Wrong name used in encounters")
                         }
@@ -96,6 +106,7 @@ class EncounterManager {
             }
         }
     }
+
     
     func placeNextEncounter(currentYPos:CGFloat) {
         // Count the encounters in a random ready type (Uint32):
@@ -138,5 +149,4 @@ class EncounterManager {
         encounter.position = CGPoint(x: 375, y: currentYPos + 1800)
         resetSpritePositions(node: encounter)
     }
-    
 }

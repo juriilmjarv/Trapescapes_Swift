@@ -26,7 +26,7 @@ class EnemyPlatform: SKSpriteNode, GameSprite {
         platform.physicsBody?.isDynamic = false
         
         platform.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue
-        platform.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedBee.rawValue
+        platform.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedOwl.rawValue
         
     }
     

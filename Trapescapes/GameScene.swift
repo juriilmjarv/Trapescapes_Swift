@@ -17,8 +17,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let player = Player()
     let hud = HUD()
     
-    //let countdownLabel = SKLabelNode()
-    //var count = 5
+    let countdownLabel = SKLabelNode()
+    var count = 3
     
     var currentMaxY:Int = 0
     var didFail = false
@@ -32,7 +32,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let motionManager = CMMotionManager()
     var xAcceleration:CGFloat = 0
     
-    var coinsCollected = 0
+    var score = 0
+    
+    private var activeTouches = [UITouch:String]()
     
     override func didMove(to view: SKView) {
         
@@ -43,8 +45,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Spawn the player
         player.spawn(parentNode: world, position: initialPlayerPosition)
-        //player.physicsBody?.affectedByGravity = false
-        //player.physicsBody?.isDynamic = false
+        //This is for not allowing for player movement until countdown is 0
+        player.physicsBody?.affectedByGravity = false
+        player.physicsBody?.isDynamic = false
         
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
@@ -62,8 +65,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let accelerometerData = data {
                 let acceleration = accelerometerData.acceleration
                 self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
-                //make y acceleration very sensitive and work in opposite way which makes it easier to use.
-                //self.yAcceleration = CGFloat(acceleration.y) * 2 + self.yAcceleration * 0.25
             }
         }
         
@@ -76,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(hud)
         hud.zPosition = 50
         
-        //countdown(count: 5)
+        countdown(count: 3)
         
     }
     
@@ -95,19 +96,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+
         for t in touches {
             let location = t.location(in: self)
             let nodeTouched = atPoint(location)
             
-            if(location.x > self.frame.size.width/2){
-                player.startFlapping()
-            }
-            
-            if(location.x < self.frame.size.width/2){
-                fireBullet()
-            }
-            
+            let button = findButtonName(from: t)
+            activeTouches[t] = button
+            tapBegin(on: button)
+
             if nodeTouched.name == "restartGame"{
                 self.removeAllChildren()
                 self.removeAllActions()
@@ -122,19 +119,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
             }
         }
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            self.touchMoved(toPoint: t.location(in: self))
-        }
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             self.touchUp(atPoint: t.location(in: self))
+            guard let button = activeTouches[t] else {fatalError("Touch just ended but not found into activeTouches")}
+            activeTouches[t] = nil
+            tapEnd(on: button)
         }
-        player.stopFlapping()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -143,32 +141,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         player.stopFlapping()
     }
+
+    private func tapBegin(on button: String) {
+        if(button == "right") {
+            player.startFlapping()
+        } else if button == "left" {
+            fireBullet()
+        }
+    }
+    
+    private func tapEnd(on button:String) {
+        if(button == "right") {
+            player.stopFlapping()
+        }
+    }
+    
+    private func findButtonName(from touch: UITouch) -> String {
+        let location = touch.location(in: self)
+        if location.x > self.frame.size.width/2 {
+            return "right"
+        } else {
+            return "left"
+        }
+    }
     
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         player.update();
+        player.position.x += xAcceleration * 50
     }
     
     
     override func didSimulatePhysics() {
         
         //if player exceeds left/right edge then place it on left/right to prevent disapearing
-        player.position.x += xAcceleration * 50
+        //player.position.x += xAcceleration * 50
         if player.position.x < -20 {
             player.position = CGPoint(x: self.size.width + 20 , y: player.position.y)
         } else if player.position.x > self.size.width + 20 {
             player.position = CGPoint(x: -20, y: player.position.y)
         }
         
-        //Dont let the player go out of camera from the bottom
-        if player.position.y < -640 {
-            player.position = CGPoint(x: player.position.x , y: self.size.height-self.size.height - 640)
-        }
-        
         //Keep track of current max Y position
         if Int(player.position.y) > currentMaxY {
+            
+            score += 1
             currentMaxY = Int(player.position.y)
+            hud.coinCounter(newCoinCount: self.score)
         }
         
         //If player falls 1000px then end game and set didFail to true to prevent goint into endless loop
@@ -194,7 +214,77 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             encounterManager.placeNextEncounter(currentYPos: nextEncounterSpawnPosition)
             nextEncounterSpawnPosition += 2000
         }
+    }
+    
+   
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let otherBody:SKPhysicsBody
+        let beeMask = PhysicsCategory.playerOwl.rawValue | PhysicsCategory.damagedOwl.rawValue
+        if(contact.bodyA.categoryBitMask & beeMask > 0){
+            otherBody = contact.bodyB
+        } else {
+            otherBody = contact.bodyA
+        }
         
+        switch otherBody.categoryBitMask {
+        case PhysicsCategory.enemy.rawValue:
+            player.takeDamage()
+            hud.updateHealth(newHealth: player.health)
+            print("Collision with enemy!!!!")
+        case PhysicsCategory.coin.rawValue:
+            print("Coin collison")
+            if let coin = otherBody.node as? Coin {
+                coin.collectCoin()
+                self.score += coin.val
+                hud.coinCounter(newCoinCount: self.score)
+                print(self.score)
+            }
+        default:
+            print("contact with something other than enemy")
+        }
+    }
+    
+    func gameOver() {
+        hud.showButtons()
+    }
+    
+    /*
+     countdown before game start
+     Source: https://stackoverflow.com/questions/35943307/ios-spritekit-countdown-before-game-starts
+     */
+    func countdown(count: Int) {
+        countdownLabel.position = CGPoint(x: self.size.width / 2, y: -self.size.height / 2)
+        countdownLabel.fontName = "GujaratiSangamMN-Bold"
+        countdownLabel.fontColor = SKColor.white
+        countdownLabel.fontSize = 150
+        countdownLabel.zPosition = 100
+        countdownLabel.text = "\(count)"
+        
+        self.addChild(countdownLabel)
+        
+        let pulseUp = SKAction.scale(to: 3.0, duration: 0.5)
+        let pulseDown = SKAction.scale(to: 0.5, duration: 0.5)
+        let pulse = SKAction.sequence([pulseUp, pulseDown])
+        let repeatPulse = SKAction.repeatForever(pulse)
+        self.countdownLabel.run(repeatPulse)
+        
+        let counterDecrement = SKAction.sequence([SKAction.wait(forDuration: 1.0),
+                                                  SKAction.run(countdownAction)])
+        run(SKAction.sequence([SKAction.repeat(counterDecrement, count: 3),
+                               SKAction.run(endCountdown)]))
+        
+    }
+    
+    func countdownAction() {
+        count = count - 1
+        countdownLabel.text = "\(count)"
+    }
+    
+    func endCountdown() {
+        countdownLabel.removeFromParent()
+        player.physicsBody?.affectedByGravity = true
+        player.physicsBody?.isDynamic = true
     }
     
     func fireBullet() {
@@ -215,75 +305,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         actionArray.append(SKAction.removeFromParent())
         bullet.run(SKAction.sequence(actionArray))
     }
-    
-    func didBegin(_ contact: SKPhysicsContact) {
-        let otherBody:SKPhysicsBody
-        let beeMask = PhysicsCategory.bee.rawValue | PhysicsCategory.damagedBee.rawValue
-        if(contact.bodyA.categoryBitMask & beeMask > 0){
-            otherBody = contact.bodyB
-        } else {
-            otherBody = contact.bodyA
-        }
-        
-        switch otherBody.categoryBitMask {
-        case PhysicsCategory.enemy.rawValue:
-            player.takeDamage()
-            hud.updateHealth(newHealth: player.health)
-            print("Collision with enemy!!!!")
-        case PhysicsCategory.coin.rawValue:
-            print("Coin collison")
-            if let coin = otherBody.node as? Coin {
-                coin.collectCoin()
-                self.coinsCollected += coin.val
-                hud.coinCounter(newCoinCount: self.coinsCollected)
-                print(self.coinsCollected)
-            }
-        default:
-            print("contact with something other than enemy")
-        }
-    }
-    
-    func gameOver() {
-        hud.showButtons()
-    }
-    
-    /*
-    func countdown(count: Int) {
-        //countdownLabel.horizontalAlignmentMode = .center
-        //countdownLabel.verticalAlignmentMode = .baseline
-        countdownLabel.position = CGPoint(x: self.size.width / 2, y: -self.size.height / 2)
-        countdownLabel.fontColor = SKColor.white
-        countdownLabel.fontSize = 80
-        countdownLabel.zPosition = 100
-        countdownLabel.text = "Start in \(count)..."
-        
-        self.addChild(countdownLabel)
-        
-        let counterDecrement = SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                                  SKAction.run(countdownAction)])
-        
-        run(SKAction.sequence([SKAction.repeat(counterDecrement, count: 5),
-                               SKAction.run(endCountdown)]))
-        
-    }
-    
-    func countdownAction() {
-        count = count - 1
-        countdownLabel.text = "Start in \(count)..."
-    }
-    
-    func endCountdown() {
-        countdownLabel.removeFromParent()
-        player.physicsBody?.affectedByGravity = true
-        player.physicsBody?.isDynamic = true
-    }
- */
+ 
     
 }
 
 enum PhysicsCategory:UInt32 {
-    case bee = 1
-    case damagedBee = 2
+    case playerOwl = 1
+    case damagedOwl = 2
     case enemy = 4
     case coin = 8
 }
+

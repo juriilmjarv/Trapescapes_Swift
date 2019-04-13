@@ -34,6 +34,7 @@
 		53BDF561223809C9005BC159 /* EncounterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF560223809C9005BC159 /* EncounterManager.swift */; };
 		53BDF563223815EA005BC159 /* EncounterGhosts.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF562223815EA005BC159 /* EncounterGhosts.sks */; };
 		53BDF565223816E5005BC159 /* EncounterPlatforms.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF564223816E5005BC159 /* EncounterPlatforms.sks */; };
+		53E079FA225E066400C46772 /* EnemyEagle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E079F9225E066300C46772 /* EnemyEagle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		53BDF560223809C9005BC159 /* EncounterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncounterManager.swift; sourceTree = "<group>"; };
 		53BDF562223815EA005BC159 /* EncounterGhosts.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterGhosts.sks; sourceTree = "<group>"; };
 		53BDF564223816E5005BC159 /* EncounterPlatforms.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterPlatforms.sks; sourceTree = "<group>"; };
+		53E079F9225E066300C46772 /* EnemyEagle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyEagle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				53649F91224FD1CF006A04C9 /* MenuScene.swift */,
 				53649F93225367A9006A04C9 /* Coin.swift */,
 				53649F972254D39D006A04C9 /* Playerpath.sks */,
+				53E079F9225E066300C46772 /* EnemyEagle.swift */,
 			);
 			path = Trapescapes;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				53649F8C224F9A31006A04C9 /* HUD.swift in Sources */,
 				53BDF5492232D5F5005BC159 /* GameSprite.swift in Sources */,
 				53649F94225367A9006A04C9 /* Coin.swift in Sources */,
+				53E079FA225E066400C46772 /* EnemyEagle.swift in Sources */,
 				53BDF561223809C9005BC159 /* EncounterManager.swift in Sources */,
 				53649F92224FD1CF006A04C9 /* MenuScene.swift in Sources */,
 				53BDF54B2232F006005BC159 /* Player.swift in Sources */,

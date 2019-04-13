@@ -16,6 +16,9 @@ class HUD: SKNode {
     let restartButton = SKSpriteNode()
     let menuButton = SKSpriteNode()
     var backgroundLayer = SKShapeNode()
+    
+    let gameOverScore = SKLabelNode(text: "000000")
+    
 
     
     func createHudNodes(screenSize: CGSize){
@@ -68,12 +71,18 @@ class HUD: SKNode {
         formatter.minimumIntegerDigits = 6
         if let coinStr = formatter.string(from: number){
             coinCountText.text = coinStr
+            gameOverScore.text = coinCountText.text
         }
     }
     
     func showButtons() {
         restartButton.alpha = 0
         menuButton.alpha = 0
+        
+        //gameOverScore.text = coinCountText.text
+        gameOverScore.fontSize = 100
+        gameOverScore.position = CGPoint(x: 375, y: -600)
+        self.addChild(gameOverScore)
         
         self.addChild(backgroundLayer)
         self.addChild(restartButton)
