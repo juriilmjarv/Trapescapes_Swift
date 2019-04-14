@@ -13,7 +13,9 @@ class EncounterManager {
     let encounterNames:[String] = [
         "EncounterMills",
         "EncounterGhosts",
-        "EncounterPlatforms"
+        "EncounterPlatforms",
+        "4",
+        "5"
     ]
     
     var currentEncounterIndex:Int?
@@ -62,14 +64,14 @@ class EncounterManager {
     }
     
     func addEncountersToWorld(world:SKNode) {
-        var encounterYPos = -2000
+        var encounterYPos:Double = -2000
         for index in 0 ... encounters.count - 1 {
             // Spawn the encounters behind the action, with
             // increasing height so they do not collide:
             encounters[index].position = CGPoint(x: 375, y:
                 encounterYPos)
             world.addChild(encounters[index])
-            encounterYPos *= 2
+            encounterYPos *= 1.67
         }
     }
     

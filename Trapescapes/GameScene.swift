@@ -26,10 +26,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let encounterManager = EncounterManager()
     var nextEncounterSpawnPosition = CGFloat(1000)
     
-    let initialPlayerPosition = CGPoint(x: 0, y: -200)
+    let initialPlayerPosition = CGPoint(x: 375, y: -200)
     var playerProgress = CGFloat()
     
-    let motionManager = CMMotionManager()
+    //let motionManager = CMMotionManager()
+    var motionManager: CMMotionManager!
     var xAcceleration:CGFloat = 0
     
     var score = 0
@@ -49,6 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.isDynamic = false
         
+        
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
         let groundSize = CGSize(width: 0 , height: self.size.height * 3)
@@ -56,17 +58,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.zPosition = -1
         
         //set gravity on y axis
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: -12)
         
         //Accelerometer
-        motionManager.accelerometerUpdateInterval = 0.01
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
-            (data:CMAccelerometerData?, error: Error?) in
-            if let accelerometerData = data {
-                let acceleration = accelerometerData.acceleration
-                self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
-            }
-        }
+        //motionManager.accelerometerUpdateInterval = 0.01
+        //motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
+        //    (data:CMAccelerometerData?, error: Error?) in
+        //    if let accelerometerData = data {
+        //        let acceleration = accelerometerData.acceleration
+        //        self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
+        //    }
+        //}
+        
+        motionManager = CMMotionManager()
+        motionManager.startAccelerometerUpdates()
         
         //add encounters
         encounterManager.addEncountersToWorld(world: self.world)
@@ -80,7 +85,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         countdown(count: 3)
         
     }
-    
 
     func touchDown(atPoint pos : CGPoint) {
         player.startFlapping()
@@ -165,13 +169,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         player.update();
+        if let data = motionManager.accelerometerData {
+            let acceleration = data.acceleration
+            self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
+        }
         player.position.x += xAcceleration * 50
     }
-    
     
     override func didSimulatePhysics() {
         
@@ -232,6 +238,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.takeDamage()
             hud.updateHealth(newHealth: player.health)
             print("Collision with enemy!!!!")
+            let emitter = SKEmitterNode(fileNamed: "Explosion.sks")!
+            emitter.position = CGPoint(x: player.position.x, y: -self.size.height + 250)
+            let addEmitterAction = SKAction.run({self.addChild(emitter)})
+            let emitterDuration = 0.5
+            let wait = SKAction.wait(forDuration: TimeInterval(emitterDuration))
+            let remove = SKAction.run({emitter.removeFromParent(); print("Emitter removed")})
+            let sequence = SKAction.sequence([addEmitterAction, wait, remove])
+            
+            self.run(sequence)
         case PhysicsCategory.coin.rawValue:
             print("Coin collison")
             if let coin = otherBody.node as? Coin {
@@ -247,6 +262,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func gameOver() {
         hud.showButtons()
+        motionManager.stopAccelerometerUpdates()
     }
     
     /*
@@ -288,7 +304,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func fireBullet() {
-        self.run(SKAction.playSoundFileNamed("shooting.mp3", waitForCompletion: false))
+        let sound = SKAudioNode(fileNamed: "shooting.aiff")
+        sound.autoplayLooped = false
+        addChild(sound)
+        let playAction = SKAction.play()
+        sound.run(playAction)
+        //self.run(SKAction.playSoundFileNamed("shooting.mp3", waitForCompletion: false))
         let bullet = SKSpriteNode(imageNamed: "bullet.png")
         bullet.position = CGPoint(x: player.position.x , y: -self.size.height + 275)
         bullet.zPosition = 2

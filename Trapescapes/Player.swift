@@ -35,7 +35,7 @@ class Player: SKSpriteNode, GameSprite  {
         self.physicsBody?.linearDamping = 0.1
         self.physicsBody?.mass = 10
         self.physicsBody?.allowsRotation = false
-        self.physicsBody?.restitution = 0.5
+        self.physicsBody?.restitution = 0.3
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.playerOwl.rawValue
         self.physicsBody?.contactTestBitMask = PhysicsCategory.enemy.rawValue | PhysicsCategory.coin.rawValue
