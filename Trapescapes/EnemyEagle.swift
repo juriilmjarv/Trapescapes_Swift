@@ -23,13 +23,19 @@ class EnemyEagle:  SKSpriteNode, GameSprite{
         let moveAction = SKAction.animate(with: movingFrames, timePerFrame: 0.14)
         let eagleAction = SKAction.repeatForever(moveAction)
         self.run(eagleAction)
+        self.physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2)
+        self.physicsBody?.affectedByGravity = false
+        
+        self.physicsBody?.categoryBitMask = PhysicsCategory.eagleCategory.rawValue
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.bullet.rawValue
+        self.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedOwl.rawValue
     
         self.run(movingAction)
+        
+        
     }
     
     func createAnimations() {
-        //let movingFrames:[SKTexture] = [textureAtlas.textureNamed("1.png"), textureAtlas.textureNamed("2.png"), textureAtlas.textureNamed("3.png"), textureAtlas.textureNamed("4.png")]
-        //let moveAction = SKAction.animate(with: movingFrames, timePerFrame: 0.14)
         let pathLeft = SKAction.moveBy(x: -200, y: 0, duration: 2)
         let pathRight = SKAction.moveBy(x: 200, y: 0, duration: 2)
         let flipNegative = SKAction.scaleX(to: -1, duration: 0)
@@ -38,5 +44,19 @@ class EnemyEagle:  SKSpriteNode, GameSprite{
         movingAction = SKAction.repeatForever(movement)
     }
     
-    
+    func wasShot(){
+        self.physicsBody?.categoryBitMask = 0
+        let shotAnimation = SKAction.group([SKAction.fadeAlpha(to: 0, duration: 0), SKAction.scale(to: 2.0, duration: 0)])
+        let resetEagle = SKAction.run {
+            self.position.y = -5000
+            self.alpha = 1
+            self.xScale = 1
+            self.yScale = 1
+            self.physicsBody?.categoryBitMask = PhysicsCategory.eagleCategory.rawValue
+        }
+        
+        let shotSequence = SKAction.sequence([shotAnimation,resetEagle])
+        self.run(shotSequence)
+    }
+
 }

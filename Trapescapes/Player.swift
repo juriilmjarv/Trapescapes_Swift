@@ -38,7 +38,7 @@ class Player: SKSpriteNode, GameSprite  {
         self.physicsBody?.restitution = 0.3
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.playerOwl.rawValue
-        self.physicsBody?.contactTestBitMask = PhysicsCategory.enemy.rawValue | PhysicsCategory.coin.rawValue
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.enemy.rawValue | PhysicsCategory.coin.rawValue | PhysicsCategory.eagleCategory.rawValue
         
     }
     

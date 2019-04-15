@@ -226,8 +226,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         let otherBody:SKPhysicsBody
-        let beeMask = PhysicsCategory.playerOwl.rawValue | PhysicsCategory.damagedOwl.rawValue
-        if(contact.bodyA.categoryBitMask & beeMask > 0){
+        let owlMask = PhysicsCategory.playerOwl.rawValue | PhysicsCategory.damagedOwl.rawValue
+        if(contact.bodyA.categoryBitMask & owlMask > 0){
             otherBody = contact.bodyB
         } else {
             otherBody = contact.bodyA
@@ -237,6 +237,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case PhysicsCategory.enemy.rawValue:
             player.takeDamage()
             hud.updateHealth(newHealth: player.health)
+            let patSound = SKAudioNode(fileNamed: "patSound.aiff")
+            patSound.autoplayLooped = false
+            addChild(patSound)
+            let playAction = SKAction.play()
+            patSound.run(playAction)
             print("Collision with enemy!!!!")
             let emitter = SKEmitterNode(fileNamed: "Explosion.sks")!
             emitter.position = CGPoint(x: player.position.x, y: -self.size.height + 250)
@@ -245,7 +250,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let wait = SKAction.wait(forDuration: TimeInterval(emitterDuration))
             let remove = SKAction.run({emitter.removeFromParent(); print("Emitter removed")})
             let sequence = SKAction.sequence([addEmitterAction, wait, remove])
-            
             self.run(sequence)
         case PhysicsCategory.coin.rawValue:
             print("Coin collison")
@@ -253,10 +257,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 coin.collectCoin()
                 self.score += coin.val
                 hud.coinCounter(newCoinCount: self.score)
-                print(self.score)
             }
         default:
             print("contact with something other than enemy")
+        }
+        
+        
+        var firstBody:SKPhysicsBody
+        var secondBody:SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        }else{
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if (firstBody.categoryBitMask & PhysicsCategory.bullet.rawValue) != 0 && (secondBody.categoryBitMask & PhysicsCategory.eagleCategory.rawValue) != 0 {
+            bulletDidCollideWithEnemy(bulletNode: firstBody.node as! SKSpriteNode, enemyNode: secondBody.node as! SKSpriteNode)
+            if let enemyEagle = secondBody.node as? EnemyEagle {
+                enemyEagle.wasShot()
+                self.score += 100
+            }
+        }
+        
+        if(firstBody.categoryBitMask & PhysicsCategory.playerOwl.rawValue) != 0 && (secondBody.categoryBitMask & PhysicsCategory.eagleCategory.rawValue) != 0 {
+            player.takeDamage()
+            hud.updateHealth(newHealth: player.health)
+        }
+    }
+    
+    func bulletDidCollideWithEnemy(bulletNode:SKSpriteNode, enemyNode:SKSpriteNode) {
+        
+        let explosion = SKEmitterNode(fileNamed: "Explosion")!
+        explosion.position = bulletNode.position
+        self.addChild(explosion)
+        
+        bulletNode.removeFromParent()
+        
+        
+        self.run(SKAction.wait(forDuration: 2)) {
+            explosion.removeFromParent()
         }
     }
     
@@ -316,6 +358,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bullet.physicsBody = SKPhysicsBody(circleOfRadius: bullet.size.width / 2)
         bullet.physicsBody?.isDynamic = true
         bullet.physicsBody?.collisionBitMask = 0
+        bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet.rawValue
+        bullet.physicsBody?.contactTestBitMask = PhysicsCategory.eagleCategory.rawValue
         bullet.physicsBody?.usesPreciseCollisionDetection = true
         
         self.addChild(bullet)
@@ -335,5 +379,7 @@ enum PhysicsCategory:UInt32 {
     case damagedOwl = 2
     case enemy = 4
     case coin = 8
+    case bullet = 16
+    case eagleCategory = 32
 }
 

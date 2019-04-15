@@ -12,11 +12,13 @@
 		53649F92224FD1CF006A04C9 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F91224FD1CF006A04C9 /* MenuScene.swift */; };
 		53649F94225367A9006A04C9 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F93225367A9006A04C9 /* Coin.swift */; };
 		53A73FC722621B9800B25A8B /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FC622621B9800B25A8B /* Explosion.sks */; };
-		53A73FC9226220A200B25A8B /* patSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FC8226220A200B25A8B /* patSound.mp3 */; };
 		53A73FCB22622DFA00B25A8B /* 4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCA22622DFA00B25A8B /* 4.sks */; };
 		53A73FCD22622ECA00B25A8B /* 5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCC22622ECA00B25A8B /* 5.sks */; };
 		53A73FCF22638BD500B25A8B /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */; };
 		53A73FD12263C40100B25A8B /* shooting.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD02263C40000B25A8B /* shooting.aiff */; };
+		53A73FD32264887B00B25A8B /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A73FD22264887B00B25A8B /* MusicManager.swift */; };
+		53A73FD52264982500B25A8B /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A73FD42264982500B25A8B /* Bullet.swift */; };
+		53A73FD72264C89100B25A8B /* patSound.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD62264C89100B25A8B /* patSound.aiff */; };
 		53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF52C2232D294005BC159 /* AppDelegate.swift */; };
 		53BDF52F2232D294005BC159 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF52E2232D294005BC159 /* GameScene.sks */; };
 		53BDF5312232D294005BC159 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF5302232D294005BC159 /* Actions.sks */; };
@@ -47,11 +49,13 @@
 		53649F91224FD1CF006A04C9 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		53649F93225367A9006A04C9 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		53A73FC622621B9800B25A8B /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
-		53A73FC8226220A200B25A8B /* patSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = patSound.mp3; sourceTree = "<group>"; };
 		53A73FCA22622DFA00B25A8B /* 4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 4.sks; sourceTree = "<group>"; };
 		53A73FCC22622ECA00B25A8B /* 5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 5.sks; sourceTree = "<group>"; };
 		53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundMusic.mp3; sourceTree = "<group>"; };
 		53A73FD02263C40000B25A8B /* shooting.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = shooting.aiff; sourceTree = "<group>"; };
+		53A73FD22264887B00B25A8B /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
+		53A73FD42264982500B25A8B /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
+		53A73FD62264C89100B25A8B /* patSound.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = patSound.aiff; sourceTree = "<group>"; };
 		53BDF5292232D294005BC159 /* Trapescapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trapescapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53BDF52C2232D294005BC159 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		53BDF52E2232D294005BC159 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -108,9 +112,9 @@
 		53BDF52B2232D294005BC159 /* Trapescapes */ = {
 			isa = PBXGroup;
 			children = (
+				53A73FD62264C89100B25A8B /* patSound.aiff */,
 				53A73FD02263C40000B25A8B /* shooting.aiff */,
 				53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */,
-				53A73FC8226220A200B25A8B /* patSound.mp3 */,
 				53649F89224F9981006A04C9 /* hud.atlas */,
 				53BDF55B223807CB005BC159 /* Encounters */,
 				53BDF55222367A04005BC159 /* enemies.atlas */,
@@ -137,6 +141,8 @@
 				53649F93225367A9006A04C9 /* Coin.swift */,
 				53E079F9225E066300C46772 /* EnemyEagle.swift */,
 				53A73FC622621B9800B25A8B /* Explosion.sks */,
+				53A73FD22264887B00B25A8B /* MusicManager.swift */,
+				53A73FD42264982500B25A8B /* Bullet.swift */,
 			);
 			path = Trapescapes;
 			sourceTree = "<group>";
@@ -214,6 +220,7 @@
 				53BDF565223816E5005BC159 /* EncounterPlatforms.sks in Resources */,
 				53BDF5452232D2D2005BC159 /* ground.atlas in Resources */,
 				53A73FC722621B9800B25A8B /* Explosion.sks in Resources */,
+				53A73FD72264C89100B25A8B /* patSound.aiff in Resources */,
 				53BDF5382232D294005BC159 /* Main.storyboard in Resources */,
 				53A73FCD22622ECA00B25A8B /* 5.sks in Resources */,
 				53BDF563223815EA005BC159 /* EncounterGhosts.sks in Resources */,
@@ -223,7 +230,6 @@
 				53A73FCB22622DFA00B25A8B /* 4.sks in Resources */,
 				53BDF53A2232D296005BC159 /* Assets.xcassets in Resources */,
 				53A73FD12263C40100B25A8B /* shooting.aiff in Resources */,
-				53A73FC9226220A200B25A8B /* patSound.mp3 in Resources */,
 				53A73FCF22638BD500B25A8B /* backgroundMusic.mp3 in Resources */,
 				53BDF54D2232F6F8005BC159 /* player.atlas in Resources */,
 				53BDF53D2232D296005BC159 /* LaunchScreen.storyboard in Resources */,
@@ -253,6 +259,8 @@
 				53649F92224FD1CF006A04C9 /* MenuScene.swift in Sources */,
 				53BDF54B2232F006005BC159 /* Player.swift in Sources */,
 				53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */,
+				53A73FD32264887B00B25A8B /* MusicManager.swift in Sources */,
+				53A73FD52264982500B25A8B /* Bullet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

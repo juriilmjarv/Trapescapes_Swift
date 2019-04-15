@@ -12,6 +12,8 @@ import SpriteKit
 class MenuScene: SKScene {
     let textures:SKTextureAtlas = SKTextureAtlas(named: "hud.atlas")
     let startButton = SKSpriteNode()
+    let muteBtn = SKSpriteNode()
+    let unMuteBtn = SKSpriteNode()
     
     override func didMove(to view: SKView) {
         self.anchorPoint = CGPoint(x: 0, y: 1)
@@ -28,6 +30,27 @@ class MenuScene: SKScene {
         startButton.name = "StartBtn"
         startButton.position = CGPoint(x: self.size.width / 2, y: -self.size.height / 2)
         self.addChild(startButton)
+        
+        //Texture Source: https://opengameart.org/content/play-pause-mute-and-unmute-buttons
+        muteBtn.texture = textures.textureNamed("unmute.png")
+        muteBtn.size = CGSize(width: 74, height: 74)
+        muteBtn.name = "muteBtn"
+        muteBtn.position = CGPoint(x: self.size.width / 2, y: -self.size.height + 100)
+        
+        //Texture Source: https://opengameart.org/content/play-pause-mute-and-unmute-buttons
+        unMuteBtn.texture = textures.textureNamed("mute.png")
+        unMuteBtn.size = CGSize(width: 74, height: 74)
+        unMuteBtn.name = "unMuteBtn"
+        unMuteBtn.position = CGPoint(x: self.size.width / 2, y: -self.size.height + 100)
+        
+        //Check if should load mute or unMute button
+        if MusicManager.shared.checkIfPlaying() == true {
+            self.addChild(muteBtn)
+        } else{
+            self.addChild(unMuteBtn)
+        }
+        
+        
         
         let startText = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
         startText.text = "START GAME"
@@ -50,6 +73,18 @@ class MenuScene: SKScene {
                 let gameSceneTemp = GameScene(size: self.size)
                 gameSceneTemp.anchorPoint = CGPoint(x: 0, y: 1)
                 self.view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
+            }
+            
+            if nodeTouched.name == "muteBtn" {
+                muteBtn.removeFromParent()
+                self.addChild(unMuteBtn)
+                MusicManager.shared.pause()
+            }
+            
+            if nodeTouched.name == "unMuteBtn" {
+                unMuteBtn.removeFromParent()
+                self.addChild(muteBtn)
+                MusicManager.shared.play()
             }
         }
     }

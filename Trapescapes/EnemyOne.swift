@@ -28,7 +28,7 @@ class EnemyOne: SKSpriteNode, GameSprite {
         mill.physicsBody?.affectedByGravity = false
         mill.physicsBody?.isDynamic = false        
         
-        mill.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue
+        mill.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue 
         mill.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedOwl.rawValue
     }
     
