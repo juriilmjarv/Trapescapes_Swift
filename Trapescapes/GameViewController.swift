@@ -10,9 +10,11 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import AVFoundation
+import GameKit
 
 class GameViewController: UIViewController {
-    //var music = AVAudioPlayer()
+    var gcEnabled = Bool() // Check if the user has Game Center enabled
+    var gcDefaultLeaderBoard = String() // Check the default leaderboardID
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,34 @@ class GameViewController: UIViewController {
             //initialize background music using Singleton
             MusicManager.shared.setup()
             MusicManager.shared.play()
+            
+            authenticateLocalPlayer(menuScene: gameSceneTemp)
+        }
+    }
+    
+    func authenticateLocalPlayer(menuScene: SKScene){
+        let localPlayer: GKLocalPlayer = GKLocalPlayer.local
+        
+        localPlayer.authenticateHandler = {(ViewController, error) -> Void in
+            if((ViewController) != nil) {
+                // 1. Show login if player is not logged in
+                self.present(ViewController!, animated: true, completion: nil)
+            } else if (localPlayer.isAuthenticated) {
+                // 2. Player is already authenticated & logged in, load game center
+                self.gcEnabled = true
+                
+                // Get the default leaderboard ID
+                localPlayer.loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifer, error) in
+                    if error != nil { print("error")
+                    } else { self.gcDefaultLeaderBoard = leaderboardIdentifer! }
+                })
+                
+            } else {
+                // 3. Game center is not enabled on the users device
+                self.gcEnabled = false
+                print("Local player could not be authenticated!")
+                print("error")
+            }
         }
     }
 

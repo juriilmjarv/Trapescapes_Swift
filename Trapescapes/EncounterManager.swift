@@ -11,9 +11,9 @@ import SpriteKit
 
 class EncounterManager {
     let encounterNames:[String] = [
-        "EncounterMills",
-        "EncounterGhosts",
-        "EncounterPlatforms",
+        "1",
+        "2",
+        "3",
         "4",
         "5"
     ]

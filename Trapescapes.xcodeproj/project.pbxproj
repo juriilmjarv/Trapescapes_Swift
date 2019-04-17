@@ -11,7 +11,7 @@
 		53649F8C224F9A31006A04C9 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F8B224F9A31006A04C9 /* HUD.swift */; };
 		53649F92224FD1CF006A04C9 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F91224FD1CF006A04C9 /* MenuScene.swift */; };
 		53649F94225367A9006A04C9 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649F93225367A9006A04C9 /* Coin.swift */; };
-		53A73FC722621B9800B25A8B /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FC622621B9800B25A8B /* Explosion.sks */; };
+		539B6C5122672F06004524BD /* Explosion1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 539B6C5022672F06004524BD /* Explosion1.sks */; };
 		53A73FCB22622DFA00B25A8B /* 4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCA22622DFA00B25A8B /* 4.sks */; };
 		53A73FCD22622ECA00B25A8B /* 5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCC22622ECA00B25A8B /* 5.sks */; };
 		53A73FCF22638BD500B25A8B /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */; };
@@ -36,10 +36,10 @@
 		53BDF55322367A04005BC159 /* enemies.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF55222367A04005BC159 /* enemies.atlas */; };
 		53BDF5582236B987005BC159 /* EnemyPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF5572236B987005BC159 /* EnemyPlatform.swift */; };
 		53BDF55A2237FB18005BC159 /* EnemyGhost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF5592237FB18005BC159 /* EnemyGhost.swift */; };
-		53BDF55F2238084E005BC159 /* EncounterMills.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF55E2238084E005BC159 /* EncounterMills.sks */; };
+		53BDF55F2238084E005BC159 /* 1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF55E2238084E005BC159 /* 1.sks */; };
 		53BDF561223809C9005BC159 /* EncounterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF560223809C9005BC159 /* EncounterManager.swift */; };
-		53BDF563223815EA005BC159 /* EncounterGhosts.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF562223815EA005BC159 /* EncounterGhosts.sks */; };
-		53BDF565223816E5005BC159 /* EncounterPlatforms.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF564223816E5005BC159 /* EncounterPlatforms.sks */; };
+		53BDF563223815EA005BC159 /* 2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF562223815EA005BC159 /* 2.sks */; };
+		53BDF565223816E5005BC159 /* 3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF564223816E5005BC159 /* 3.sks */; };
 		53E079FA225E066400C46772 /* EnemyEagle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E079F9225E066300C46772 /* EnemyEagle.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +48,7 @@
 		53649F8B224F9A31006A04C9 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		53649F91224FD1CF006A04C9 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		53649F93225367A9006A04C9 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
-		53A73FC622621B9800B25A8B /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		539B6C5022672F06004524BD /* Explosion1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion1.sks; sourceTree = "<group>"; };
 		53A73FCA22622DFA00B25A8B /* 4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 4.sks; sourceTree = "<group>"; };
 		53A73FCC22622ECA00B25A8B /* 5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 5.sks; sourceTree = "<group>"; };
 		53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundMusic.mp3; sourceTree = "<group>"; };
@@ -75,10 +75,10 @@
 		53BDF55222367A04005BC159 /* enemies.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = enemies.atlas; sourceTree = "<group>"; };
 		53BDF5572236B987005BC159 /* EnemyPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyPlatform.swift; sourceTree = "<group>"; };
 		53BDF5592237FB18005BC159 /* EnemyGhost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyGhost.swift; sourceTree = "<group>"; };
-		53BDF55E2238084E005BC159 /* EncounterMills.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterMills.sks; sourceTree = "<group>"; };
+		53BDF55E2238084E005BC159 /* 1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 1.sks; sourceTree = "<group>"; };
 		53BDF560223809C9005BC159 /* EncounterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncounterManager.swift; sourceTree = "<group>"; };
-		53BDF562223815EA005BC159 /* EncounterGhosts.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterGhosts.sks; sourceTree = "<group>"; };
-		53BDF564223816E5005BC159 /* EncounterPlatforms.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterPlatforms.sks; sourceTree = "<group>"; };
+		53BDF562223815EA005BC159 /* 2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 2.sks; sourceTree = "<group>"; };
+		53BDF564223816E5005BC159 /* 3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 3.sks; sourceTree = "<group>"; };
 		53E079F9225E066300C46772 /* EnemyEagle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyEagle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,9 +140,9 @@
 				53649F91224FD1CF006A04C9 /* MenuScene.swift */,
 				53649F93225367A9006A04C9 /* Coin.swift */,
 				53E079F9225E066300C46772 /* EnemyEagle.swift */,
-				53A73FC622621B9800B25A8B /* Explosion.sks */,
 				53A73FD22264887B00B25A8B /* MusicManager.swift */,
 				53A73FD42264982500B25A8B /* Bullet.swift */,
+				539B6C5022672F06004524BD /* Explosion1.sks */,
 			);
 			path = Trapescapes;
 			sourceTree = "<group>";
@@ -150,9 +150,9 @@
 		53BDF55B223807CB005BC159 /* Encounters */ = {
 			isa = PBXGroup;
 			children = (
-				53BDF55E2238084E005BC159 /* EncounterMills.sks */,
-				53BDF562223815EA005BC159 /* EncounterGhosts.sks */,
-				53BDF564223816E5005BC159 /* EncounterPlatforms.sks */,
+				53BDF55E2238084E005BC159 /* 1.sks */,
+				53BDF562223815EA005BC159 /* 2.sks */,
+				53BDF564223816E5005BC159 /* 3.sks */,
 				53A73FCA22622DFA00B25A8B /* 4.sks */,
 				53A73FCC22622ECA00B25A8B /* 5.sks */,
 			);
@@ -217,15 +217,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53BDF565223816E5005BC159 /* EncounterPlatforms.sks in Resources */,
+				53BDF565223816E5005BC159 /* 3.sks in Resources */,
 				53BDF5452232D2D2005BC159 /* ground.atlas in Resources */,
-				53A73FC722621B9800B25A8B /* Explosion.sks in Resources */,
 				53A73FD72264C89100B25A8B /* patSound.aiff in Resources */,
 				53BDF5382232D294005BC159 /* Main.storyboard in Resources */,
 				53A73FCD22622ECA00B25A8B /* 5.sks in Resources */,
-				53BDF563223815EA005BC159 /* EncounterGhosts.sks in Resources */,
+				53BDF563223815EA005BC159 /* 2.sks in Resources */,
 				53BDF52F2232D294005BC159 /* GameScene.sks in Resources */,
-				53BDF55F2238084E005BC159 /* EncounterMills.sks in Resources */,
+				53BDF55F2238084E005BC159 /* 1.sks in Resources */,
 				53649F8A224F9981006A04C9 /* hud.atlas in Resources */,
 				53A73FCB22622DFA00B25A8B /* 4.sks in Resources */,
 				53BDF53A2232D296005BC159 /* Assets.xcassets in Resources */,
@@ -235,6 +234,7 @@
 				53BDF53D2232D296005BC159 /* LaunchScreen.storyboard in Resources */,
 				53BDF55322367A04005BC159 /* enemies.atlas in Resources */,
 				53BDF5312232D294005BC159 /* Actions.sks in Resources */,
+				539B6C5122672F06004524BD /* Explosion1.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

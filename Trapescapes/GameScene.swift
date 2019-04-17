@@ -237,13 +237,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case PhysicsCategory.enemy.rawValue:
             player.takeDamage()
             hud.updateHealth(newHealth: player.health)
-            let patSound = SKAudioNode(fileNamed: "patSound.aiff")
-            patSound.autoplayLooped = false
-            addChild(patSound)
-            let playAction = SKAction.play()
-            patSound.run(playAction)
+            player.makePlayerImmortal()
             print("Collision with enemy!!!!")
-            let emitter = SKEmitterNode(fileNamed: "Explosion.sks")!
+            let emitter = SKEmitterNode(fileNamed: "Explosion1.sks")!
             emitter.position = CGPoint(x: player.position.x, y: -self.size.height + 250)
             let addEmitterAction = SKAction.run({self.addChild(emitter)})
             let emitterDuration = 0.5
@@ -285,12 +281,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(firstBody.categoryBitMask & PhysicsCategory.playerOwl.rawValue) != 0 && (secondBody.categoryBitMask & PhysicsCategory.eagleCategory.rawValue) != 0 {
             player.takeDamage()
             hud.updateHealth(newHealth: player.health)
+            player.makePlayerImmortal()
+            let emitter = SKEmitterNode(fileNamed: "Explosion1.sks")!
+            emitter.position = CGPoint(x: player.position.x, y: -self.size.height + 250)
+            let addEmitterAction = SKAction.run({self.addChild(emitter)})
+            let emitterDuration = 0.5
+            let wait = SKAction.wait(forDuration: TimeInterval(emitterDuration))
+            let remove = SKAction.run({emitter.removeFromParent(); print("Emitter removed")})
+            let sequence = SKAction.sequence([addEmitterAction, wait, remove])
+            self.run(sequence)
         }
     }
     
     func bulletDidCollideWithEnemy(bulletNode:SKSpriteNode, enemyNode:SKSpriteNode) {
         
-        let explosion = SKEmitterNode(fileNamed: "Explosion")!
+        let explosion = SKEmitterNode(fileNamed: "Explosion1")!
         explosion.position = bulletNode.position
         self.addChild(explosion)
         

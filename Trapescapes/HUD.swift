@@ -16,6 +16,7 @@ class HUD: SKNode {
     let restartButton = SKSpriteNode()
     let menuButton = SKSpriteNode()
     var backgroundLayer = SKShapeNode()
+    var hudBar = SKShapeNode()
     
     let gameOverScore = SKLabelNode(text: "000000")
     
@@ -23,11 +24,17 @@ class HUD: SKNode {
     
     func createHudNodes(screenSize: CGSize){
         
+        hudBar = SKShapeNode(rectOf: CGSize(width: (screenSize.width * 2) + 1, height: -99))
+        hudBar.fillColor = SKColor.black
+        hudBar.lineWidth = 0
+        hudBar.alpha = 0.4
+        self.addChild(hudBar)
+        
         for index in 0..<3 {
             let newHeartNode = SKSpriteNode(texture: textureAtlas.textureNamed("Heart.png"))
-            newHeartNode.size = CGSize(width: 100, height: 45)
-            let xPos = CGFloat(index * 60 + 33)
-            let yPos = CGFloat(-screenSize.height + 1250)
+            newHeartNode.size = CGSize(width: 63, height: 33)
+            let xPos = CGFloat(index * 40 + 620)
+            let yPos = CGFloat(-screenSize.height + 1308)
             newHeartNode.position = CGPoint(x: xPos, y: yPos)
             heartNodes.append(newHeartNode)
             self.addChild(newHeartNode)
@@ -44,8 +51,8 @@ class HUD: SKNode {
         menuButton.size = CGSize(width: 70, height: 70)
         
         coinCountText.fontName = "Futura-Medium"
-        coinCountText.fontSize = 40
-        coinCountText.position = CGPoint(x: 75, y: -screenSize.height + 1300)
+        coinCountText.fontSize = 30
+        coinCountText.position = CGPoint(x: 90, y: -screenSize.height + 1295)
         self.addChild(coinCountText)
         
         backgroundLayer = SKShapeNode(rectOf: CGSize(width: (screenSize.width * 2) + 1, height: (-screenSize.height * 2) - 1))

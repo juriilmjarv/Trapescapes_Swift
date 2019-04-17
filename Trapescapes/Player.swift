@@ -20,6 +20,7 @@ class Player: SKSpriteNode, GameSprite  {
     var damaged = false
     var damageAnimation = SKAction()
     var dieAnimation = SKAction()
+    var immortal = false
     
     func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 75, height: 75)) {
         parentNode.addChild(self)
@@ -128,7 +129,7 @@ class Player: SKSpriteNode, GameSprite  {
     
     func takeDamage() {
         // If invulnerable or damaged, return:
-        if self.damaged { return }
+        if self.damaged || self.immortal { return }
         //self.damaged = true
         // Remove one from our health pool
         self.health -= 1
@@ -141,5 +142,13 @@ class Player: SKSpriteNode, GameSprite  {
             // Run the take damage animation:
             self.run(self.damageAnimation)
         }
+    }
+    
+    func makePlayerImmortal(){
+        self.immortal = true
+        let immortalSequence = SKAction.sequence([SKAction.wait(forDuration: 0.2), SKAction.run {
+            self.immortal = false
+            }])
+        self.run(immortalSequence)
     }
 }

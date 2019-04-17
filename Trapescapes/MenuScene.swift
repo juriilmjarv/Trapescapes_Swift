@@ -8,12 +8,16 @@
 
 import Foundation
 import SpriteKit
+import GameKit
 
-class MenuScene: SKScene {
+class MenuScene: SKScene, GKGameCenterControllerDelegate {
+    
     let textures:SKTextureAtlas = SKTextureAtlas(named: "hud.atlas")
     let startButton = SKSpriteNode()
     let muteBtn = SKSpriteNode()
     let unMuteBtn = SKSpriteNode()
+    
+    var userAuthenticated = false
     
     override func didMove(to view: SKView) {
         self.anchorPoint = CGPoint(x: 0, y: 1)
@@ -73,6 +77,8 @@ class MenuScene: SKScene {
                 let gameSceneTemp = GameScene(size: self.size)
                 gameSceneTemp.anchorPoint = CGPoint(x: 0, y: 1)
                 self.view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
+            } else if nodeTouched.name == "LeaderBoardBtn" {
+                showLeaderboard()
             }
             
             if nodeTouched.name == "muteBtn" {
@@ -88,4 +94,37 @@ class MenuScene: SKScene {
             }
         }
     }
+    
+    override func update(_ currentTime: TimeInterval) {
+        if GKLocalPlayer.local.isAuthenticated && userAuthenticated == false {
+            createLeaderboardButton()
+            userAuthenticated = true
+        }
+    }
+    
+    func createLeaderboardButton(){
+        let leaderboardText = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+        leaderboardText.text = "Leaderboard"
+        leaderboardText.name = "LeaderBoardBtn"
+        leaderboardText.position = CGPoint(x: self.size.width / 2, y: -self.size.height + 300)
+        leaderboardText.fontSize = 30
+        self.addChild(leaderboardText)
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
+    }
+    
+    func showLeaderboard(){
+        let gameCenter = GKGameCenterViewController()
+        gameCenter.gameCenterDelegate = self
+        gameCenter.viewState = .leaderboards
+        gameCenter.leaderboardIdentifier = "trapescapes_Score"
+        if let gameViewController = self.view?.window?.rootViewController {
+            gameViewController.show(gameCenter, sender: self)
+            gameViewController.navigationController?.pushViewController(gameCenter, animated: true)
+        }
+    }
+    
+    
 }
