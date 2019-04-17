@@ -17,33 +17,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let ground = Ground()
     let player = Player()
     let hud = HUD()
-    
     let countdownLabel = SKLabelNode()
     var count = 3
-    
     var currentMaxY:Int = 0
     var didFail = false
-    
     let encounterManager = EncounterManager()
     var nextEncounterSpawnPosition = CGFloat(1000)
-    
     let initialPlayerPosition = CGPoint(x: 375, y: -200)
     var playerProgress = CGFloat()
-    
-    //let motionManager = CMMotionManager()
     var motionManager: CMMotionManager!
     var xAcceleration:CGFloat = 0
-    
     var score = 0
-    
-    
     private var activeTouches = [UITouch:String]()
     
     override func didMove(to view: SKView) {
         
         self.view?.isMultipleTouchEnabled = true
-        
-        
         self.addChild(world)
         
         //Spawn the player
@@ -51,7 +40,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //This is for not allowing for player movement until countdown is 0
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.isDynamic = false
-        
         
         //spawn the ground
         let groundPosition = CGPoint(x: 0, y: -self.size.height)
@@ -61,16 +49,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //set gravity on y axis
         self.physicsWorld.gravity = CGVector(dx: 0, dy: -12)
-        
-        //Accelerometer
-        //motionManager.accelerometerUpdateInterval = 0.01
-        //motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
-        //    (data:CMAccelerometerData?, error: Error?) in
-        //    if let accelerometerData = data {
-        //        let acceleration = accelerometerData.acceleration
-        //        self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
-        //    }
-        //}
         
         motionManager = CMMotionManager()
         motionManager.startAccelerometerUpdates()
@@ -85,30 +63,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hud.zPosition = 50
         
         countdown(count: 3)
-        
-
-        
     }
 
     func touchDown(atPoint pos : CGPoint) {
         player.startFlapping()
-        
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-        
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        
-    }
+    func touchMoved(toPoint pos : CGPoint) {}
+    func touchUp(atPoint pos : CGPoint) {}
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
         for t in touches {
             let location = t.location(in: self)
             let nodeTouched = atPoint(location)
-            
             let button = findButtonName(from: t)
             activeTouches[t] = button
             tapBegin(on: button)
@@ -127,7 +94,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseVertical(withDuration: 0.5))
             }
         }
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -153,8 +119,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private func tapBegin(on button: String) {
         if(button == "right") {
             player.startFlapping()
-        } else if button == "left" {
+        } else if button == "left" && didFail == false {
             fireBullet()
+        } else {
+            print("Shooting disabled because dead!")
         }
     }
     
@@ -194,7 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Keep track of current max Y position
         if Int(player.position.y) > currentMaxY {
-            
             score += 1
             currentMaxY = Int(player.position.y)
             hud.coinCounter(newCoinCount: self.score)
@@ -213,7 +180,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Figure out player position and scroll the world based on that.
         let worldYPos = -(player.position.y * world.yScale + (self.size.height / 1.2))
         world.position = CGPoint(x: 0, y: worldYPos)
-        
         
         playerProgress = player.position.y - initialPlayerPosition.y
         ground.checkForReposition(playerProgress: playerProgress)
@@ -241,6 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.takeDamage()
             hud.updateHealth(newHealth: player.health)
             player.makePlayerImmortal()
+            if(player.health == 0){ didFail = true}
             print("Collision with enemy!!!!")
             let emitter = SKEmitterNode(fileNamed: "Explosion1.sks")!
             emitter.position = CGPoint(x: player.position.x, y: -self.size.height + 250)
@@ -261,10 +228,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("contact with something other than enemy")
         }
         
-        
         var firstBody:SKPhysicsBody
         var secondBody:SKPhysicsBody
-        
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
@@ -297,13 +262,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func bulletDidCollideWithEnemy(bulletNode:SKSpriteNode, enemyNode:SKSpriteNode) {
-        
         let explosion = SKEmitterNode(fileNamed: "Explosion1")!
         explosion.position = bulletNode.position
         self.addChild(explosion)
-        
         bulletNode.removeFromParent()
-        
         self.run(SKAction.wait(forDuration: 0.5)) {
             explosion.removeFromParent()
         }
@@ -327,7 +289,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         countdownLabel.fontSize = 150
         countdownLabel.zPosition = 100
         countdownLabel.text = "\(count)"
-        
         self.addChild(countdownLabel)
         
         let pulseUp = SKAction.scale(to: 3.0, duration: 0.5)
@@ -355,11 +316,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func fireBullet() {
-        //let sound = SKAudioNode(fileNamed: "shooting.aiff")
-        //sound.autoplayLooped = false
-        //addChild(sound)
-        //let playAction = SKAction.play()
-        //sound.run(playAction)
         self.run(SKAction.playSoundFileNamed("shooting.aiff", waitForCompletion: false))
         let bullet = SKSpriteNode(imageNamed: "bullet.png")
         bullet.position = CGPoint(x: player.position.x , y: -self.size.height + 275)
@@ -394,7 +350,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     print("Best score submitted to leaderboard!")
                 }
             }
-            
         }
     }
  

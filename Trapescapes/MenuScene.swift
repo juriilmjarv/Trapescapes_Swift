@@ -35,6 +35,11 @@ class MenuScene: SKScene, GKGameCenterControllerDelegate {
         startButton.name = "StartBtn"
         startButton.position = CGPoint(x: self.size.width / 2, y: -self.size.height / 2)
         self.addChild(startButton)
+        let pulseUp = SKAction.scale(to: 1.1, duration: 1.0)
+        let pulseDown = SKAction.scale(to: 1.0, duration: 1.0)
+        let pulse = SKAction.sequence([pulseUp, pulseDown])
+        let repeatPulse = SKAction.repeatForever(pulse)
+        startButton.run(repeatPulse)
         
         //Texture Source: https://opengameart.org/content/play-pause-mute-and-unmute-buttons
         muteBtn.texture = textures.textureNamed("unmute.png")
