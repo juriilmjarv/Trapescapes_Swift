@@ -355,12 +355,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func fireBullet() {
-        let sound = SKAudioNode(fileNamed: "shooting.aiff")
-        sound.autoplayLooped = false
-        addChild(sound)
-        let playAction = SKAction.play()
-        sound.run(playAction)
-        //self.run(SKAction.playSoundFileNamed("shooting.mp3", waitForCompletion: false))
+        //let sound = SKAudioNode(fileNamed: "shooting.aiff")
+        //sound.autoplayLooped = false
+        //addChild(sound)
+        //let playAction = SKAction.play()
+        //sound.run(playAction)
+        self.run(SKAction.playSoundFileNamed("shooting.aiff", waitForCompletion: false))
         let bullet = SKSpriteNode(imageNamed: "bullet.png")
         bullet.position = CGPoint(x: player.position.x , y: -self.size.height + 275)
         bullet.zPosition = 2
