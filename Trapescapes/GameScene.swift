@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 import CoreMotion
+import GameKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -34,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var xAcceleration:CGFloat = 0
     
     var score = 0
+    
     
     private var activeTouches = [UITouch:String]()
     
@@ -83,6 +85,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hud.zPosition = 50
         
         countdown(count: 3)
+        
+
         
     }
 
@@ -182,7 +186,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didSimulatePhysics() {
         
         //if player exceeds left/right edge then place it on left/right to prevent disapearing
-        //player.position.x += xAcceleration * 50
         if player.position.x < -20 {
             player.position = CGPoint(x: self.size.width + 20 , y: player.position.y)
         } else if player.position.x > self.size.width + 20 {
@@ -301,8 +304,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         bulletNode.removeFromParent()
         
-        
-        self.run(SKAction.wait(forDuration: 2)) {
+        self.run(SKAction.wait(forDuration: 0.5)) {
             explosion.removeFromParent()
         }
     }
@@ -310,6 +312,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver() {
         hud.showButtons()
         motionManager.stopAccelerometerUpdates()
+        player.physicsBody?.contactTestBitMask = 0
+        updateLeaderBoard()
     }
     
     /*
@@ -360,6 +364,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bullet = SKSpriteNode(imageNamed: "bullet.png")
         bullet.position = CGPoint(x: player.position.x , y: -self.size.height + 275)
         bullet.zPosition = 2
+        bullet.name = "bullet"
         bullet.physicsBody = SKPhysicsBody(circleOfRadius: bullet.size.width / 2)
         bullet.physicsBody?.isDynamic = true
         bullet.physicsBody?.collisionBitMask = 0
@@ -374,6 +379,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         actionArray.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
         actionArray.append(SKAction.removeFromParent())
         bullet.run(SKAction.sequence(actionArray))
+        
+    }
+
+    
+    func updateLeaderBoard(){
+        if GKLocalPlayer.local.isAuthenticated {
+            let finalScore = GKScore(leaderboardIdentifier: "trapescapes_Score")
+            finalScore.value = Int64(self.score)
+            GKScore.report([finalScore]) { (error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Best score submitted to leaderboard!")
+                }
+            }
+            
+        }
     }
  
     

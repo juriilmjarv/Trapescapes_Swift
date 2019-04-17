@@ -17,7 +17,6 @@
 		53A73FCF22638BD500B25A8B /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */; };
 		53A73FD12263C40100B25A8B /* shooting.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD02263C40000B25A8B /* shooting.aiff */; };
 		53A73FD32264887B00B25A8B /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A73FD22264887B00B25A8B /* MusicManager.swift */; };
-		53A73FD52264982500B25A8B /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A73FD42264982500B25A8B /* Bullet.swift */; };
 		53A73FD72264C89100B25A8B /* patSound.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD62264C89100B25A8B /* patSound.aiff */; };
 		53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF52C2232D294005BC159 /* AppDelegate.swift */; };
 		53BDF52F2232D294005BC159 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF52E2232D294005BC159 /* GameScene.sks */; };
@@ -54,7 +53,6 @@
 		53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundMusic.mp3; sourceTree = "<group>"; };
 		53A73FD02263C40000B25A8B /* shooting.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = shooting.aiff; sourceTree = "<group>"; };
 		53A73FD22264887B00B25A8B /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
-		53A73FD42264982500B25A8B /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		53A73FD62264C89100B25A8B /* patSound.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = patSound.aiff; sourceTree = "<group>"; };
 		53BDF5292232D294005BC159 /* Trapescapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trapescapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53BDF52C2232D294005BC159 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				53649F93225367A9006A04C9 /* Coin.swift */,
 				53E079F9225E066300C46772 /* EnemyEagle.swift */,
 				53A73FD22264887B00B25A8B /* MusicManager.swift */,
-				53A73FD42264982500B25A8B /* Bullet.swift */,
 				539B6C5022672F06004524BD /* Explosion1.sks */,
 			);
 			path = Trapescapes;
@@ -260,7 +257,6 @@
 				53BDF54B2232F006005BC159 /* Player.swift in Sources */,
 				53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */,
 				53A73FD32264887B00B25A8B /* MusicManager.swift in Sources */,
-				53A73FD52264982500B25A8B /* Bullet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

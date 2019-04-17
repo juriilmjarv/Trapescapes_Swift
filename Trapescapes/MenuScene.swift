@@ -21,16 +21,17 @@ class MenuScene: SKScene, GKGameCenterControllerDelegate {
     
     override func didMove(to view: SKView) {
         self.anchorPoint = CGPoint(x: 0, y: 1)
-        self.backgroundColor = UIColor(red: 0.4, green: 0.6, blue: 0.95, alpha: 1.0)
+        self.backgroundColor = SKColor.black
         
         let logoText = SKLabelNode(fontNamed: "AvenirNext-Heavy")
         logoText.text = "Trapescapes"
-        logoText.position = CGPoint(x: self.size.width / 2, y: (-self.size.height / 2) + 200)
-        logoText.fontSize = 50
+        logoText.position = CGPoint(x: self.size.width / 2, y: (-self.size.height / 2) + 500)
+        logoText.fontSize = 100
         self.addChild(logoText)
         
-        startButton.texture = textures.textureNamed("button.png")
-        startButton.size = CGSize(width: 350, height: 100)
+        // button asset source: https://opengameart.org/content/ui-button
+        startButton.texture = textures.textureNamed("buttonStock1.png")
+        startButton.size = CGSize(width: 375, height: 220)
         startButton.name = "StartBtn"
         startButton.position = CGPoint(x: self.size.width / 2, y: -self.size.height / 2)
         self.addChild(startButton)
@@ -106,7 +107,7 @@ class MenuScene: SKScene, GKGameCenterControllerDelegate {
         let leaderboardText = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
         leaderboardText.text = "Leaderboard"
         leaderboardText.name = "LeaderBoardBtn"
-        leaderboardText.position = CGPoint(x: self.size.width / 2, y: -self.size.height + 300)
+        leaderboardText.position = CGPoint(x: self.size.width / 2, y: -self.size.height + 500)
         leaderboardText.fontSize = 30
         self.addChild(leaderboardText)
     }
