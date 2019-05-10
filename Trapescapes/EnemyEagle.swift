@@ -24,6 +24,7 @@ class EnemyEagle:  SKSpriteNode, GameSprite{
         self.size = size
         self.position = position
         
+        //sprite source: https://opengameart.org/content/flappy-dragon-sprite-sheets
         let movingFrames:[SKTexture] = [textureAtlas.textureNamed("1.png"), textureAtlas.textureNamed("2.png"), textureAtlas.textureNamed("3.png"), textureAtlas.textureNamed("4.png")]
         let moveAction = SKAction.animate(with: movingFrames, timePerFrame: 0.14)
         let eagleAction = SKAction.repeatForever(moveAction)
