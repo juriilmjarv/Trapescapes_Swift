@@ -18,6 +18,7 @@
 		53A73FD12263C40100B25A8B /* shooting.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD02263C40000B25A8B /* shooting.aiff */; };
 		53A73FD32264887B00B25A8B /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A73FD22264887B00B25A8B /* MusicManager.swift */; };
 		53A73FD72264C89100B25A8B /* patSound.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD62264C89100B25A8B /* patSound.aiff */; };
+		53AD17CE2285952B0018E2F0 /* 6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53AD17CD2285952B0018E2F0 /* 6.sks */; };
 		53BDF52D2232D294005BC159 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF52C2232D294005BC159 /* AppDelegate.swift */; };
 		53BDF52F2232D294005BC159 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF52E2232D294005BC159 /* GameScene.sks */; };
 		53BDF5312232D294005BC159 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53BDF5302232D294005BC159 /* Actions.sks */; };
@@ -54,6 +55,7 @@
 		53A73FD02263C40000B25A8B /* shooting.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = shooting.aiff; sourceTree = "<group>"; };
 		53A73FD22264887B00B25A8B /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
 		53A73FD62264C89100B25A8B /* patSound.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = patSound.aiff; sourceTree = "<group>"; };
+		53AD17CD2285952B0018E2F0 /* 6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 6.sks; sourceTree = "<group>"; };
 		53BDF5292232D294005BC159 /* Trapescapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trapescapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53BDF52C2232D294005BC159 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		53BDF52E2232D294005BC159 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				53BDF564223816E5005BC159 /* 3.sks */,
 				53A73FCA22622DFA00B25A8B /* 4.sks */,
 				53A73FCC22622ECA00B25A8B /* 5.sks */,
+				53AD17CD2285952B0018E2F0 /* 6.sks */,
 			);
 			path = Encounters;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				53BDF5382232D294005BC159 /* Main.storyboard in Resources */,
 				53A73FCD22622ECA00B25A8B /* 5.sks in Resources */,
 				53BDF563223815EA005BC159 /* 2.sks in Resources */,
+				53AD17CE2285952B0018E2F0 /* 6.sks in Resources */,
 				53BDF52F2232D294005BC159 /* GameScene.sks in Resources */,
 				53BDF55F2238084E005BC159 /* 1.sks in Resources */,
 				53649F8A224F9981006A04C9 /* hud.atlas in Resources */,

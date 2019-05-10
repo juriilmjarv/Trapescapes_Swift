@@ -15,7 +15,8 @@ class EncounterManager {
         "2",
         "3",
         "4",
-        "5"
+        "5",
+        "6"
     ]
     
     var currentEncounterIndex:Int?
@@ -24,7 +25,8 @@ class EncounterManager {
     var encounters:[SKNode] = []
     
     //instantiate EnemyOne prototype
-    let base = EnemyOne()
+    let baseMill = EnemyOne()
+    let baseEagle = EnemyEagle()
     
     init() {
         for encounterFileName in encounterNames {
@@ -35,11 +37,11 @@ class EncounterManager {
                     let node = placeholder
                         switch node.name! {
                         case "Mill":
-                            let millClockWise = base.clone()
+                            let millClockWise = baseMill.clone()
                             millClockWise.rotation = -.pi
                             millClockWise.spawn(parentNode: encounter, position: node.position)
                         case "MillAntiClock":
-                            let millAntiClockWise = base.clone()
+                            let millAntiClockWise = baseMill.clone()
                             millAntiClockWise.spawn(parentNode: encounter, position: node.position)
                         case "Platform":
                             let platform = EnemyPlatform()
@@ -51,8 +53,15 @@ class EncounterManager {
                             let coin = Coin()
                             coin.spawn(parentNode: encounter, position: node.position)
                         case "EnemyEagle":
-                            let eagle = EnemyEagle()
+                            let eagle = baseEagle.clone()
                             eagle.spawn(parentNode: encounter, position: node.position)
+                        case "EnemyEagleUpDown":
+                            let eagleUpDown = baseEagle.clone()
+                            eagleUpDown.moveLeft = 0;
+                            eagleUpDown.moveRight = 0;
+                            eagleUpDown.moveUp = 200;
+                            eagleUpDown.moveDown = -200;
+                            eagleUpDown.spawn(parentNode: encounter, position: node.position)
                         default:
                             print("Wrong name used in encounters")
                         }

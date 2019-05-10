@@ -12,6 +12,11 @@ import SpriteKit
 class EnemyEagle:  SKSpriteNode, GameSprite{
     var textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "enemies.atlas")
     var movingAction = SKAction()
+    
+    var moveLeft:CGFloat = -200;
+    var moveRight:CGFloat = 200;
+    var moveUp:CGFloat = 0;
+    var moveDown:CGFloat = 0;
 
     func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 65, height: 60)) {
         parentNode.addChild(self)
@@ -25,6 +30,7 @@ class EnemyEagle:  SKSpriteNode, GameSprite{
         self.run(eagleAction)
         self.physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2)
         self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.isDynamic = false
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.eagleCategory.rawValue
         self.physicsBody?.contactTestBitMask = PhysicsCategory.bullet.rawValue
@@ -36,8 +42,8 @@ class EnemyEagle:  SKSpriteNode, GameSprite{
     }
     
     func createAnimations() {
-        let pathLeft = SKAction.moveBy(x: -200, y: 0, duration: 2)
-        let pathRight = SKAction.moveBy(x: 200, y: 0, duration: 2)
+        let pathLeft = SKAction.moveBy(x: moveLeft, y: moveUp, duration: 2)
+        let pathRight = SKAction.moveBy(x: moveRight, y: moveDown, duration: 2)
         let flipNegative = SKAction.scaleX(to: -1, duration: 0)
         let flipPositive = SKAction.scaleX(to: 1, duration: 0)
         let movement = SKAction.sequence([pathRight,flipNegative,pathLeft, flipPositive])
@@ -57,6 +63,10 @@ class EnemyEagle:  SKSpriteNode, GameSprite{
         
         let shotSequence = SKAction.sequence([shotAnimation,resetEagle])
         self.run(shotSequence)
+    }
+    
+    func clone() -> EnemyEagle {
+        return EnemyEagle()
     }
 
 }
