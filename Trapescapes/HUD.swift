@@ -31,6 +31,7 @@ class HUD: SKNode {
         self.addChild(hudBar)
         
         for index in 0..<3 {
+            //heart Source: https://opengameart.org/content/heart-7
             let newHeartNode = SKSpriteNode(texture: textureAtlas.textureNamed("Heart.png"))
             newHeartNode.size = CGSize(width: 63, height: 33)
             let xPos = CGFloat(index * 40 + 620)

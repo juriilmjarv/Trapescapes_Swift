@@ -29,6 +29,7 @@ class Player: SKSpriteNode, GameSprite  {
         self.position = position
         self.run(soarAnimation, withKey: "soarAnimation")
         
+        //Sprite Source: https://opengameart.org/content/owl-character
         let bodyTexture = textureAtlas.textureNamed("left-1.png")
         self.physicsBody = SKPhysicsBody(
             texture: bodyTexture,

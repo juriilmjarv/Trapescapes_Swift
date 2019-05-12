@@ -316,6 +316,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func fireBullet() {
+        //Sound Source: https://www.zapsplat.com/music/laser-noise-synth-vintage-9/
         self.run(SKAction.playSoundFileNamed("shooting.aiff", waitForCompletion: false))
         let bullet = SKSpriteNode(imageNamed: "bullet.png")
         bullet.position = CGPoint(x: player.position.x , y: -self.size.height + 275)

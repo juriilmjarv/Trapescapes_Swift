@@ -22,6 +22,7 @@ class Ground: SKSpriteNode, GameSprite {
         self.anchorPoint = CGPoint(x: 0, y: 1)
         
         if groundTexture == nil {
+            //Ground texture source: https://opengameart.org/content/simple-seamless-hand-painted-wooden-planks-texture
             groundTexture = textureAtlas.textureNamed("g_mur4.png")
         }
         createChildren()

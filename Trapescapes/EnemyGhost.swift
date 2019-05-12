@@ -20,6 +20,7 @@ class EnemyGhost: SKSpriteNode, GameSprite {
         self.position = position
         self.physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2)
         self.physicsBody?.affectedByGravity = false
+        //Sprite Source: https://opengameart.org/content/halloween-animation-ghost
         self.texture = textureAtlas.textureNamed("ghost-frown.png")
         self.run(fadeAnimation)
         self.alpha = 0.8
