@@ -38,7 +38,7 @@ class EncounterManager {
     
     var encounters:[SKNode] = []
     
-    //instantiate EnemyOne prototype
+    //instantiate base objects and later clone them. 
     let baseMill = EnemyOne()
     let baseEagle = EnemyEagle()
     
