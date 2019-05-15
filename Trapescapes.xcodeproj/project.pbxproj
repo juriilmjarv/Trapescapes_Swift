@@ -30,7 +30,6 @@
 		53A73FCF22638BD500B25A8B /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */; };
 		53A73FD12263C40100B25A8B /* shooting.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD02263C40000B25A8B /* shooting.aiff */; };
 		53A73FD32264887B00B25A8B /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A73FD22264887B00B25A8B /* MusicManager.swift */; };
-		53A73FD72264C89100B25A8B /* patSound.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 53A73FD62264C89100B25A8B /* patSound.aiff */; };
 		53AD17CE2285952B0018E2F0 /* 6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53AD17CD2285952B0018E2F0 /* 6.sks */; };
 		53AD17D62285BF310018E2F0 /* InstructionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AD17D52285BF310018E2F0 /* InstructionScene.swift */; };
 		53AD17D82285C0A00018E2F0 /* Explosion1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 53AD17D72285C09F0018E2F0 /* Explosion1.sks */; };
@@ -83,7 +82,6 @@
 		53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundMusic.mp3; sourceTree = "<group>"; };
 		53A73FD02263C40000B25A8B /* shooting.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = shooting.aiff; sourceTree = "<group>"; };
 		53A73FD22264887B00B25A8B /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
-		53A73FD62264C89100B25A8B /* patSound.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = patSound.aiff; sourceTree = "<group>"; };
 		53AD17CD2285952B0018E2F0 /* 6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 6.sks; sourceTree = "<group>"; };
 		53AD17D52285BF310018E2F0 /* InstructionScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionScene.swift; sourceTree = "<group>"; };
 		53AD17D72285C09F0018E2F0 /* Explosion1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion1.sks; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 		53BDF52B2232D294005BC159 /* Trapescapes */ = {
 			isa = PBXGroup;
 			children = (
-				53A73FD62264C89100B25A8B /* patSound.aiff */,
 				53A73FD02263C40000B25A8B /* shooting.aiff */,
 				53A73FCE22638BD500B25A8B /* backgroundMusic.mp3 */,
 				53649F89224F9981006A04C9 /* hud.atlas */,
@@ -269,7 +266,6 @@
 				5346975A228840AB0080039F /* 8.sks in Resources */,
 				53BDF565223816E5005BC159 /* 3.sks in Resources */,
 				53BDF5452232D2D2005BC159 /* ground.atlas in Resources */,
-				53A73FD72264C89100B25A8B /* patSound.aiff in Resources */,
 				5346977022884E110080039F /* 19.sks in Resources */,
 				5346975C228841840080039F /* 9.sks in Resources */,
 				5346977222884E1D0080039F /* 20.sks in Resources */,

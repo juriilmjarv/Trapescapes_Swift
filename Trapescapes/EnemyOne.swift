@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 
+//Obstacle that looks like mill. Rotates. Uses prototype design pattern
 class EnemyOne: SKSpriteNode, GameSprite {
     var textureAtlas:SKTextureAtlas = SKTextureAtlas(named: "enemies.atlas")
     var mill = SKSpriteNode(imageNamed: "rotatingMill3.png")

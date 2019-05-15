@@ -29,8 +29,8 @@ class GameViewController: UIViewController {
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = true
-            view.showsNodeCount = true
+            //view.showsFPS = true
+            //view.showsNodeCount = true
             
             //initialize background music using Singleton
             MusicManager.shared.setup()
@@ -40,6 +40,7 @@ class GameViewController: UIViewController {
         }
     }
     
+    //authenticate player with Game Center
     func authenticateLocalPlayer(menuScene: SKScene){
         let localPlayer: GKLocalPlayer = GKLocalPlayer.local
         

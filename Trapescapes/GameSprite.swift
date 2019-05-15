@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 
+//Protocol class for all the game objects. Every object will have texture and spawn function.
 protocol GameSprite {
     var textureAtlas: SKTextureAtlas {
         get set

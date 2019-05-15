@@ -58,20 +58,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.physicsWorld.contactDelegate = self
         
+        //create HUD
         hud.createHudNodes(screenSize: self.size)
         self.addChild(hud)
         hud.zPosition = 50
         
+        //countdown before game start
         countdown(count: 3)
     }
 
     func touchDown(atPoint pos : CGPoint) {
-        player.startFlapping()
+        player.startFlapping() //start flapping
     }
     
     func touchMoved(toPoint pos : CGPoint) {}
     func touchUp(atPoint pos : CGPoint) {}
     
+    //tracks what is touched
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = t.location(in: self)
